@@ -6,12 +6,14 @@
     <title>Millitary Academy / UG5</title>
     <style>
         :root {
-            --bg: #1D1F2A;        /* Темно-синій */
+            --bg: #1A1F2E;        /* Темно-синій */
             --card: #22283C;      /* Трохи світліший за фон */
             --accent: #2D3448;    /* Акцентний колір */
             --text: #E8E8E8;      /* Світлий текст */
             --primary: linear-gradient(135deg, #4A90E2 0%, #8A4AF2 100%); /* Градієнт синій-фіолетовий */
             --primary-hover: linear-gradient(135deg, #5A9AF2 0%, #9A5AF2 100%);
+            --card-gradient: linear-gradient(135deg, #1D1F2A 0%, #2f0a5e 100%); /* Новий градієнт для карток */
+            --card-gradient-hover: linear-gradient(135deg, #2A2C3A 0%, #3f0b7a 100%);
             --text-gray: #A0A0A0;
         }
         
@@ -154,8 +156,8 @@
         }
         
         .card {
-            background: var(--card);
-            border: 1px solid var(--accent);
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
             padding: 30px;
             text-align: center;
@@ -165,22 +167,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .card:hover {
-            background: var(--primary);
+            background: var(--card-gradient-hover);
             border-color: rgba(255,255,255,0.2);
             transform: translateY(-8px);
-        }
-        
-        .card:hover h3 {
-            color: #FFFFFF;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         
         .card h3 {
             font-size: 1.5rem;
-            color: var(--text);
+            color: #FFFFFF;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
         
@@ -202,8 +202,8 @@
         }
         
         .chapter-card {
-            background: var(--card);
-            border: 1px solid var(--accent);
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
             padding: 25px;
             cursor: pointer;
@@ -213,23 +213,21 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .chapter-card:hover {
-            background: var(--primary);
+            background: var(--card-gradient-hover);
             transform: translateY(-8px) scale(1.02);
             border-color: rgba(255,255,255,0.2);
-        }
-        
-        .chapter-card:hover h4 {
-            color: #FFFFFF;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         
         .chapter-card h4 {
             font-size: 1.1rem;
-            color: var(--text);
+            color: #FFFFFF;
             line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
         
