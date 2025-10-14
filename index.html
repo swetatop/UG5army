@@ -6,11 +6,12 @@
     <title>Millitary Academy / UG5</title>
     <style>
         :root {
-            --bg: #0A0A0A;        /* Почти чёрный */
-            --card: #11150C;      /* Тёмно-зелёный как на скриншоте */
-            --accent: #1A1F12;    /* Более светлый зелёный */
-            --text: #E8E8E8;      /* Светлый текст */
-            --primary: #2A4A2A;   /* Зелёный акцент */
+            --bg: #1A1F2E;        /* Темно-синій */
+            --card: #22283C;      /* Трохи світліший за фон */
+            --accent: #2D3448;    /* Акцентний колір */
+            --text: #E8E8E8;      /* Світлий текст */
+            --primary: linear-gradient(135deg, #4A90E2 0%, #8A4AF2 100%); /* Градієнт синій-фіолетовий */
+            --primary-hover: linear-gradient(135deg, #5A9AF2 0%, #9A5AF2 100%);
             --text-gray: #A0A0A0;
         }
         
@@ -26,6 +27,8 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px; /* Місце для футера */
         }
         
         .background-overlay {
@@ -34,10 +37,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, #11150C 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, #0A0A0A 0%, transparent 50%),
-                linear-gradient(135deg, #11150C 0%, #0A0A0A 100%);
+            background: var(--bg);
             z-index: -1;
         }
         
@@ -72,11 +72,12 @@
             z-index: 1001;
             border-radius: 6px;
             transition: all 0.3s;
-            border: 1px solid #3A5A3A;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .menu-toggle:hover {
-            background: #3A5A3A;
+            background: var(--primary-hover);
+            transform: translateY(-2px);
         }
         
         .sidebar h2 {
@@ -111,7 +112,8 @@
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
             background: var(--primary);
-            border-color: #3A5A3A;
+            border-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
         }
         
         /* Main Content */
@@ -121,34 +123,18 @@
             padding: 80px 20px 40px;
         }
         
-        /* Header Image */
-        .header-image {
-            width: 100%;
-            height: 200px;
-            background: 
-                linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.9)),
-                url('https://i.postimg.cc/HLcZ4RgH/osnova-2.png');
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid var(--accent);
-        }
-        
         /* Welcome Section */
         .welcome-section {
             text-align: center;
             margin-bottom: 50px;
-            background: var(--card);
-            padding: 40px;
-            border-radius: 8px;
-            border: 1px solid var(--accent);
+            padding: 40px 20px;
         }
         
         .welcome-section h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--text);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .welcome-section p {
@@ -174,7 +160,7 @@
             padding: 30px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             min-height: 150px;
             display: flex;
             align-items: center;
@@ -183,13 +169,19 @@
         
         .card:hover {
             background: var(--primary);
-            border-color: #3A5A3A;
-            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-8px);
+        }
+        
+        .card:hover h3 {
+            color: #FFFFFF;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .card h3 {
             font-size: 1.5rem;
             color: var(--text);
+            transition: all 0.3s ease;
         }
         
         /* Pages */
@@ -215,7 +207,7 @@
             border-radius: 8px;
             padding: 25px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             aspect-ratio: 1;
             display: flex;
             align-items: center;
@@ -225,14 +217,20 @@
         
         .chapter-card:hover {
             background: var(--primary);
-            transform: scale(1.05);
-            border-color: #3A5A3A;
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .chapter-card:hover h4 {
+            color: #FFFFFF;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .chapter-card h4 {
             font-size: 1.1rem;
             color: var(--text);
             line-height: 1.4;
+            transition: all 0.3s ease;
         }
         
         /* Content Pages */
@@ -262,7 +260,9 @@
             padding: 20px;
             border-radius: 6px;
             margin-top: 30px;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid transparent;
+            border-image: var(--primary);
+            border-image-slice: 1;
         }
         
         .edit-textarea {
@@ -280,7 +280,7 @@
         
         .edit-textarea:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: #4A90E2;
         }
         
         .edit-button {
@@ -291,12 +291,13 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background 0.3s;
-            border: 1px solid #3A5A3A;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .edit-button:hover {
-            background: #3A5A3A;
+            background: var(--primary-hover);
+            transform: translateY(-2px);
         }
         
         /* Back Button */
@@ -309,18 +310,36 @@
             cursor: pointer;
             font-size: 1rem;
             margin-bottom: 30px;
-            transition: all 0.3s;
-            border: 1px solid #3A5A3A;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .back-button:hover {
-            background: #3A5A3A;
-            transform: translateX(-3px);
+            background: var(--primary-hover);
+            transform: translateX(-3px) translateY(-2px);
         }
         
         /* RP Tasks Section */
         .rp-tasks {
             margin-top: 50px;
+        }
+        
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--accent);
+            background: var(--card);
+        }
+        
+        .footer p {
+            margin: 0;
+            opacity: 0.8;
         }
         
         /* Responsive */
@@ -343,7 +362,7 @@
             }
             
             .welcome-section {
-                padding: 20px;
+                padding: 20px 10px;
             }
         }
     </style>
@@ -369,8 +388,6 @@
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
-            <div class="header-image"></div>
-            
             <div class="welcome-section">
                 <h1>Шановні інструктори!</h1>
                 <p>Цей сайт створений для допомоги інструкторам Military Academy у виконанні службових обов'язків, проведенні навчальних занять та підготовці курсантів.</p>
@@ -495,6 +512,11 @@
 
         <!-- Content Pages Container -->
         <div id="content-pages"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 Military Academy. Сайт та контент створені Perets. Усі права захищені.</p>
     </div>
 
     <script>
