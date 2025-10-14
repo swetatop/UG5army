@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Millitary Academy / UG5</title>
+    <title>Military Academy / UG5</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -218,6 +218,33 @@
             padding: 80px 20px 40px;
         }
         
+        /* Welcome Section */
+        .welcome-section {
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .welcome-section h1 {
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            font-size: 2rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        
+        .welcome-section p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
         /* Quick Cards */
         .quick-cards {
             display: grid;
@@ -234,7 +261,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-height: 150px;
+            min-height: 120px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -248,11 +275,6 @@
             border-color: rgba(255,255,255,0.2);
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-        }
-        
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
         }
         
         .card h3 {
@@ -537,9 +559,19 @@
                     <a href="#" onclick="showContentPage('training-survival', 'Тренування | Навики виживання')">Тренування | Навики виживання</a>
                 </div>
             </li>
-            <li><a href="#" class="nav-link" data-page="tasks">
-                <span class="nav-icon">🎯</span>РП Завдання
-            </a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link" data-page="tasks">
+                    <span class="nav-icon">🎯</span>РП Завдання
+                </a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContentPage('task-cleaning-akpp', 'Прибирання на АКПП')">Прибирання на АКПП</a>
+                    <a href="#" onclick="showContentPage('task-cleaning-towers', 'Прибирання на вежах')">Прибирання на вежах</a>
+                    <a href="#" onclick="showContentPage('task-oil-change', 'Заміна масла')">Заміна масла</a>
+                    <a href="#" onclick="showContentPage('task-car-cleaning', 'Чистка автомобіля')">Чистка автомобіля</a>
+                    <a href="#" onclick="showContentPage('task-weapon-assembly', 'Зборка зброї')">Зборка зброї</a>
+                    <a href="#" onclick="showContentPage('task-weapon-cleaning', 'Чистка зброї')">Чистка зброї</a>
+                </div>
+            </li>
         </ul>
         
         <div class="discord-link">
@@ -553,24 +585,25 @@
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
+            <div class="welcome-section">
+                <h1>Шановні інструктори!</h1>
+                <p>Цей сайт створений для допомоги інструкторам Military Academy у виконанні службових обов'язків, проведенні навчальних занять та підготовці курсантів.</p>
+            </div>
+
             <div class="quick-cards">
                 <div class="card" data-page="exams">
-                    <div class="card-icon">⚡</div>
                     <h3>Іспити</h3>
                 </div>
                 <div class="card" data-page="lectures">
-                    <div class="card-icon">📚</div>
                     <h3>Лекції</h3>
                 </div>
                 <div class="card" data-page="training">
-                    <div class="card-icon">💪</div>
                     <h3>Тренування</h3>
                 </div>
             </div>
 
             <div class="rp-tasks">
                 <div class="card" data-page="tasks">
-                    <div class="card-icon">🎯</div>
                     <h3>РП Завдання</h3>
                 </div>
             </div>
@@ -759,7 +792,10 @@
         }
 
         function showContentPage(contentId, title) {
-            showPage('home');
+            // Показуємо тільки контентну сторінку, без головної
+            pages.forEach(page => page.classList.remove('active'));
+            contentPages.innerHTML = '';
+            
             const parentPage = getParentPage(contentId);
             const navButtons = getNavigationButtons(contentId, parentPage);
             
@@ -783,6 +819,14 @@
                     </div>
                 </div>
             `;
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === parentPage) {
+                    link.classList.add('active');
+                }
+            });
         }
 
         function getParentPage(contentId) {
@@ -836,11 +880,11 @@
                 ''
             ).join('');
 
-            return `
+            return buttonHTML ? `
                 <div class="nav-buttons">
                     ${buttonHTML}
                 </div>
-            `;
+            ` : '';
         }
 
         function renderMarkdown(text) {
