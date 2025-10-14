@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millitary Academy / UG5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1A1F2E;        /* Темно-синій */
-            --card: #22283C;      /* Трохи світліший за фон */
-            --accent: #2D3448;    /* Акцентний колір */
-            --text: #E8E8E8;      /* Світлий текст */
-            --primary: linear-gradient(135deg, #4A90E2 0%, #8A4AF2 100%); /* Градієнт синій-фіолетовий */
+            --bg: #1A1F2E;
+            --card: #22283C;
+            --accent: #2D3448;
+            --text: #E8E8E8;
+            --primary: linear-gradient(135deg, #4A90E2 0%, #8A4AF2 100%);
             --primary-hover: linear-gradient(135deg, #5A9AF2 0%, #9A5AF2 100%);
-            --card-gradient: linear-gradient(135deg, #1D1F2A 0%, #2f0a5e 100%); /* Градієнт для карток */
+            --card-gradient: linear-gradient(135deg, #1D1F2A 0%, #2f0a5e 100%);
             --card-gradient-hover: linear-gradient(135deg, #2A2C3A 0%, #3f0b7a 100%);
             --text-gray: #A0A0A0;
         }
@@ -21,7 +22,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
         }
         
         body {
@@ -33,7 +33,17 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 60px;
+            font-family: 'Arial', sans-serif;
         }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Inter', Arial, sans-serif;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.1);
+        }
+        
+        h1 { font-weight: 700; font-size: 2.5rem; }
+        h2 { font-weight: 600; font-size: 2rem; }
+        h3 { font-weight: 500; font-size: 1.5rem; }
         
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -73,6 +83,11 @@
             left: 0;
         }
         
+        .sidebar.active ~ .menu-toggle {
+            left: 260px;
+            transition: left 0.3s ease;
+        }
+        
         .menu-toggle {
             position: fixed;
             top: 20px;
@@ -101,22 +116,27 @@
             font-size: 1.25rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 10px;
+            margin-top: 0;
         }
         
         .sidebar-nav {
             list-style: none;
+            margin-bottom: 30px;
         }
         
         .sidebar-nav li {
             margin-bottom: 10px;
+            position: relative;
         }
         
         .sidebar-nav a {
             color: var(--text);
             text-decoration: none;
             font-size: 14px;
-            padding: 10px 15px;
-            display: block;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             border-radius: 6px;
             transition: all 0.3s;
             border: 1px solid transparent;
@@ -130,34 +150,72 @@
             transform: translateY(-2px);
         }
         
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .discord-link {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .discord-link a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            background: rgba(45, 52, 72, 0.6);
+        }
+        
+        .discord-link a:hover {
+            background: var(--primary);
+            border-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Dropdown Styles */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: rgba(34, 40, 60, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 200px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            z-index: 1002;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            margin-bottom: 5px;
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+        
         /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 80px 20px 40px;
-        }
-        
-        /* Welcome Section */
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 40px 20px;
-        }
-        
-        .welcome-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--text);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        
-        .welcome-section p {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
         
         /* Quick Cards */
@@ -178,6 +236,7 @@
             transition: all 0.3s ease;
             min-height: 150px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
@@ -191,11 +250,15 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
         
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
         .card h3 {
             font-size: 1.5rem;
             color: #FFFFFF;
             text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            transition: all 0.3s ease;
         }
         
         /* Pages */
@@ -243,7 +306,6 @@
             color: #FFFFFF;
             line-height: 1.4;
             text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            transition: all 0.3s ease;
         }
         
         /* Content Pages */
@@ -268,6 +330,7 @@
             line-height: 1.8;
             color: var(--text-gray);
             margin-bottom: 30px;
+            font-family: 'Arial', sans-serif;
         }
         
         .edit-section {
@@ -291,6 +354,7 @@
             font-size: 1rem;
             resize: vertical;
             margin-bottom: 15px;
+            font-family: 'Arial', sans-serif;
         }
         
         .edit-textarea:focus {
@@ -314,6 +378,34 @@
         .edit-button:hover {
             background: var(--primary-hover);
             transform: translateY(-2px);
+        }
+        
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-btn {
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        
+        .nav-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
         }
         
         /* Back Button */
@@ -366,6 +458,22 @@
                 left: -250px;
             }
             
+            .sidebar.active ~ .menu-toggle {
+                left: 210px;
+            }
+            
+            .dropdown-content {
+                position: static;
+                display: none;
+                background: rgba(45, 52, 72, 0.8);
+                margin-top: 5px;
+                border-radius: 6px;
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+            
             .quick-cards {
                 grid-template-columns: 1fr;
             }
@@ -374,12 +482,8 @@
                 grid-template-columns: 1fr;
             }
             
-            .welcome-section h1 {
-                font-size: 2rem;
-            }
-            
-            .welcome-section {
-                padding: 20px 10px;
+            .nav-buttons {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -393,37 +497,80 @@
     <div class="sidebar">
         <h2>Military Academy</h2>
         <ul class="sidebar-nav">
-            <li><a href="#" class="nav-link active" data-page="home">Головна</a></li>
-            <li><a href="#" class="nav-link" data-page="exams">Іспити</a></li>
-            <li><a href="#" class="nav-link" data-page="lectures">Лекції</a></li>
-            <li><a href="#" class="nav-link" data-page="training">Тренування</a></li>
-            <li><a href="#" class="nav-link" data-page="tasks">РП Завдання</a></li>
+            <li><a href="#" class="nav-link active" data-page="home">
+                <span class="nav-icon">🏠</span>Головна
+            </a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link" data-page="exams">
+                    <span class="nav-icon">⚡</span>Іспити
+                </a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContentPage('exam-prisyaga', 'Іспит | Присяга')">Іспит | Присяга</a>
+                    <a href="#" onclick="showContentPage('exam-stroyoviy', 'Іспит | Стройовий статут')">Іспит | Стройовий статут</a>
+                    <a href="#" onclick="showContentPage('exam-vnutrishniy', 'Іспит | Внутрішній статут')">Іспит | Внутрішній статут</a>
+                    <a href="#" onclick="showContentPage('exam-ten-kody', 'Іспит | Тен/коди та коди')">Іспит | Тен/коди та коди</a>
+                    <a href="#" onclick="showContentPage('exam-zony-fz', 'Іспит | Існуючи зони ФЗ')">Іспит | Існуючи зони ФЗ</a>
+                    <a href="#" onclick="showContentPage('exam-dystsyplinarniy', 'Іспит | Дисциплінарний статут')">Іспит | Дисциплінарний статут</a>
+                    <a href="#" onclick="showContentPage('exam-subordynatsiya', 'Іспит | Субординація')">Іспит | Субординація</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link" data-page="lectures">
+                    <span class="nav-icon">📚</span>Лекції
+                </a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContentPage('lecture-stroyoviy', 'Лекція | Стройовий статут')">Лекція | Стройовий статут</a>
+                    <a href="#" onclick="showContentPage('lecture-vnutrishniy', 'Лекція | Внутрішній статут')">Лекція | Внутрішній статут</a>
+                    <a href="#" onclick="showContentPage('lecture-ten-kody', 'Лекція | Тен/коди та коди')">Лекція | Тен/коди та коди</a>
+                    <a href="#" onclick="showContentPage('lecture-zony-fz', 'Лекція | Існуючи зони ФЗ')">Лекція | Існуючи зони ФЗ</a>
+                    <a href="#" onclick="showContentPage('lecture-dystsyplinarniy', 'Лекція | Дисциплінарний Статут')">Лекція | Дисциплінарний Статут</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link" data-page="training">
+                    <span class="nav-icon">💪</span>Тренування
+                </a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContentPage('training-physical', 'Тренування | Фізична підготовка')">Тренування | Фізична підготовка</a>
+                    <a href="#" onclick="showContentPage('training-tactical', 'Тренування | Тактичне тренування')">Тренування | Тактичне тренування</a>
+                    <a href="#" onclick="showContentPage('training-medical', 'Тренування | Медична підготовка')">Тренування | Медична підготовка</a>
+                    <a href="#" onclick="showContentPage('training-survival', 'Тренування | Навики виживання')">Тренування | Навики виживання</a>
+                </div>
+            </li>
+            <li><a href="#" class="nav-link" data-page="tasks">
+                <span class="nav-icon">🎯</span>РП Завдання
+            </a></li>
         </ul>
+        
+        <div class="discord-link">
+            <a href="https://discord.com/users/808726131020791869" target="_blank">
+                <span class="nav-icon">💡</span>Для зворотного зв'язку та пропозицій: Discord
+            </a>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
-            <div class="welcome-section">
-                <h1>Шановні інструктори!</h1>
-                <p>Цей сайт створений для допомоги інструкторам Military Academy у виконанні службових обов'язків, проведенні навчальних занять та підготовці курсантів.</p>
-            </div>
-
             <div class="quick-cards">
                 <div class="card" data-page="exams">
+                    <div class="card-icon">⚡</div>
                     <h3>Іспити</h3>
                 </div>
                 <div class="card" data-page="lectures">
+                    <div class="card-icon">📚</div>
                     <h3>Лекції</h3>
                 </div>
                 <div class="card" data-page="training">
+                    <div class="card-icon">💪</div>
                     <h3>Тренування</h3>
                 </div>
             </div>
 
             <div class="rp-tasks">
                 <div class="card" data-page="tasks">
+                    <div class="card-icon">🎯</div>
                     <h3>РП Завдання</h3>
                 </div>
             </div>
@@ -551,10 +698,22 @@
         const pages = document.querySelectorAll('.page');
         const contentPages = document.getElementById('content-pages');
 
+        // Mobile dropdown handling
+        const dropdowns = document.querySelectorAll('.dropdown');
+        if (window.innerWidth <= 768) {
+            dropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('.nav-link');
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            });
+        }
+
         // Storage for content
         const contentStorage = {
             // Exams
-            'exam-prisyaga': '# Тут буде контент для Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни',
+            'exam-prisyaga': '# Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни',
             'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*',
             'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
             'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
@@ -601,9 +760,12 @@
 
         function showContentPage(contentId, title) {
             showPage('home');
+            const parentPage = getParentPage(contentId);
+            const navButtons = getNavigationButtons(contentId, parentPage);
+            
             contentPages.innerHTML = `
                 <div class="page active">
-                    <button class="back-button" onclick="showPage('${getParentPage(contentId)}')">← Назад</button>
+                    <button class="back-button" onclick="showPage('${parentPage}')">← Назад</button>
                     <div class="content-page">
                         <div class="content-header">
                             <h2>${title}</h2>
@@ -617,6 +779,7 @@
                             <button class="edit-button" onclick="saveContent('${contentId}')">Зберегти зміни</button>
                             <p><small>Використовуйте Markdown для форматування тексту</small></p>
                         </div>
+                        ${navButtons}
                     </div>
                 </div>
             `;
@@ -630,8 +793,57 @@
             return 'home';
         }
 
+        function getNavigationButtons(currentContentId, parentPage) {
+            const buttons = {
+                'exams': [
+                    {id: 'exam-prisyaga', title: 'Іспит | Присяга'},
+                    {id: 'exam-stroyoviy', title: 'Іспит | Стройовий статут'},
+                    {id: 'exam-vnutrishniy', title: 'Іспит | Внутрішній статут'},
+                    {id: 'exam-ten-kody', title: 'Іспит | Тен/коди та коди'},
+                    {id: 'exam-zony-fz', title: 'Іспит | Існуючи зони ФЗ'},
+                    {id: 'exam-dystsyplinarniy', title: 'Іспит | Дисциплінарний статут'},
+                    {id: 'exam-subordynatsiya', title: 'Іспит | Субординація'}
+                ],
+                'lectures': [
+                    {id: 'lecture-stroyoviy', title: 'Лекція | Стройовий статут'},
+                    {id: 'lecture-vnutrishniy', title: 'Лекція | Внутрішній статут'},
+                    {id: 'lecture-ten-kody', title: 'Лекція | Тен/коди та коди'},
+                    {id: 'lecture-zony-fz', title: 'Лекція | Існуючи зони ФЗ'},
+                    {id: 'lecture-dystsyplinarniy', title: 'Лекція | Дисциплінарний Статут'}
+                ],
+                'training': [
+                    {id: 'training-physical', title: 'Тренування | Фізична підготовка'},
+                    {id: 'training-tactical', title: 'Тренування | Тактичне тренування'},
+                    {id: 'training-medical', title: 'Тренування | Медична підготовка'},
+                    {id: 'training-survival', title: 'Тренування | Навики виживання'}
+                ],
+                'tasks': [
+                    {id: 'task-cleaning-akpp', title: 'Прибирання на АКПП'},
+                    {id: 'task-cleaning-towers', title: 'Прибирання на вежах'},
+                    {id: 'task-oil-change', title: 'Заміна масла'},
+                    {id: 'task-car-cleaning', title: 'Чистка автомобіля'},
+                    {id: 'task-weapon-assembly', title: 'Зборка зброї'},
+                    {id: 'task-weapon-cleaning', title: 'Чистка зброї'}
+                ]
+            };
+
+            const currentButtons = buttons[parentPage];
+            if (!currentButtons) return '';
+
+            const buttonHTML = currentButtons.map(button => 
+                button.id !== currentContentId ? 
+                `<button class="nav-btn" onclick="showContentPage('${button.id}', '${button.title}')">${button.title}</button>` : 
+                ''
+            ).join('');
+
+            return `
+                <div class="nav-buttons">
+                    ${buttonHTML}
+                </div>
+            `;
+        }
+
         function renderMarkdown(text) {
-            // Simple markdown parser
             return text
                 .replace(/^# (.*$)/gim, '<h1>$1</h1>')
                 .replace(/^## (.*$)/gim, '<h2>$1</h2>')
@@ -672,6 +884,7 @@
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
                 sidebar.classList.remove('active');
+                dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
             }
         });
 
