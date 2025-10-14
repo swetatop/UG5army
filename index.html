@@ -6,12 +6,12 @@
     <title>Military Academy - Посібник</title>
     <style>
         :root {
-            --bg: #1a0a2a;        /* Тёмно-фиолетовый */
-            --card: #2a1a3a;      /* Фиолетовый */
-            --accent: #3a2a4a;    /* Серо-фиолетовый */
-            --text: #e8e8e8;      /* Белый */
-            --primary: #8b5cf6;   /* Яркий фиолетовый */
-            --text-gray: #b0a0c0;
+            --bg: #0A0A0A;        /* Почти чёрный */
+            --card: #11150C;      /* Тёмно-зелёный как на скриншоте */
+            --accent: #1A1F12;    /* Более светлый зелёный */
+            --text: #E8E8E8;      /* Светлый текст */
+            --primary: #2A4A2A;   /* Зелёный акцент */
+            --text-gray: #A0A0A0;
         }
         
         * {
@@ -35,8 +35,9 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(59, 28, 97, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(42, 26, 58, 0.3) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, #11150C 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #0A0A0A 0%, transparent 50%),
+                linear-gradient(135deg, #11150C 0%, #0A0A0A 100%);
             z-index: -1;
         }
         
@@ -51,7 +52,7 @@
             transition: left 0.3s ease;
             z-index: 1000;
             padding: 20px;
-            border-right: 2px solid var(--accent);
+            border-right: 1px solid var(--accent);
         }
         
         .sidebar.active {
@@ -65,25 +66,24 @@
             background: var(--primary);
             border: none;
             color: var(--text);
-            font-size: 24px;
+            font-size: 16px;
             padding: 10px 15px;
             cursor: pointer;
             z-index: 1001;
-            border-radius: 8px;
+            border-radius: 6px;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            border: 1px solid #3A5A3A;
         }
         
         .menu-toggle:hover {
-            background: #9d75ff;
-            transform: scale(1.05);
+            background: #3A5A3A;
         }
         
         .sidebar h2 {
             color: var(--text);
             margin-bottom: 30px;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             border-bottom: 1px solid var(--accent);
             padding-bottom: 10px;
         }
@@ -93,27 +93,25 @@
         }
         
         .sidebar-nav li {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .sidebar-nav a {
             color: var(--text);
             text-decoration: none;
-            font-size: 1.1rem;
-            padding: 12px 15px;
+            font-size: 14px;
+            padding: 10px 15px;
             display: block;
-            border-radius: 8px;
+            border-radius: 6px;
             transition: all 0.3s;
-            border-left: 3px solid transparent;
+            border: 1px solid transparent;
             background: var(--accent);
         }
         
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
             background: var(--primary);
-            border-left: 3px solid #9d75ff;
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            border-color: #3A5A3A;
         }
         
         /* Main Content */
@@ -121,8 +119,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 80px 20px 40px;
-            position: relative;
-            z-index: 1;
         }
         
         /* Header Image */
@@ -130,14 +126,13 @@
             width: 100%;
             height: 200px;
             background: 
-                linear-gradient(rgba(26, 10, 42, 0.8), rgba(26, 10, 42, 0.9)),
+                linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.9)),
                 url('https://i.postimg.cc/HLcZ4RgH/osnova-2.png');
             background-size: cover;
             background-position: center;
-            border-radius: 12px;
+            border-radius: 8px;
             margin-bottom: 30px;
             border: 1px solid var(--accent);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
         /* Welcome Section */
@@ -146,18 +141,14 @@
             margin-bottom: 50px;
             background: var(--card);
             padding: 40px;
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid var(--accent);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
         
         .welcome-section h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--text);
-            background: linear-gradient(135deg, var(--primary), #9d75ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         .welcome-section p {
@@ -179,7 +170,7 @@
         .card {
             background: var(--card);
             border: 1px solid var(--accent);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 30px;
             text-align: center;
             cursor: pointer;
@@ -188,14 +179,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
         
         .card:hover {
-            transform: translateY(-8px);
             background: var(--primary);
-            border-color: #9d75ff;
-            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+            border-color: #3A5A3A;
+            transform: translateY(-5px);
         }
         
         .card h3 {
@@ -223,7 +212,7 @@
         .chapter-card {
             background: var(--card);
             border: 1px solid var(--accent);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 25px;
             cursor: pointer;
             transition: all 0.3s;
@@ -232,14 +221,12 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
         
         .chapter-card:hover {
             background: var(--primary);
             transform: scale(1.05);
-            border-color: #9d75ff;
-            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+            border-color: #3A5A3A;
         }
         
         .chapter-card h4 {
@@ -252,11 +239,10 @@
         .content-page {
             background: var(--card);
             border: 1px solid var(--accent);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 30px;
             margin-top: 20px;
             min-height: 500px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
         
         .content-header {
@@ -274,7 +260,7 @@
         .edit-section {
             background: var(--accent);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 6px;
             margin-top: 30px;
             border-left: 4px solid var(--primary);
         }
@@ -284,37 +270,33 @@
             height: 300px;
             background: var(--bg);
             border: 1px solid var(--accent);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text);
             padding: 15px;
             font-size: 1rem;
             resize: vertical;
             margin-bottom: 15px;
-            transition: all 0.3s;
         }
         
         .edit-textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
         }
         
         .edit-button {
             background: var(--primary);
             color: var(--text);
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            transition: background 0.3s;
+            border: 1px solid #3A5A3A;
         }
         
         .edit-button:hover {
-            background: #9d75ff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+            background: #3A5A3A;
         }
         
         /* Back Button */
@@ -323,18 +305,17 @@
             color: var(--text);
             border: none;
             padding: 12px 25px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
             margin-bottom: 30px;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            border: 1px solid #3A5A3A;
         }
         
         .back-button:hover {
-            background: #9d75ff;
+            background: #3A5A3A;
             transform: translateX(-3px);
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
         }
         
         /* RP Tasks Section */
@@ -371,7 +352,7 @@
     <div class="background-overlay"></div>
     
     <!-- Sidebar Menu -->
-    <button class="menu-toggle">☰</button>
+    <button class="menu-toggle">☰ Меню</button>
     
     <div class="sidebar">
         <h2>Military Academy</h2>
