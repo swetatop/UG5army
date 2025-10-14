@@ -7,10 +7,10 @@
     <style>
         :root {
             --army-dark: #000000;
-            --army-green: #4B5320;
-            --army-light: #6B8E23;
+            --army-green: #2D3210;
+            --army-light: #4A5320;
             --text-light: #f0f0f0;
-            --text-gray: #cccccc;
+            --text-gray: #aaaaaa;
         }
         
         * {
@@ -21,10 +21,23 @@
         }
         
         body {
-            background: linear-gradient(135deg, var(--army-dark) 0%, var(--army-green) 100%);
+            background: #050805;
             color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+        
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(45, 50, 16, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(74, 83, 32, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.4) 0%, transparent 50%);
+            z-index: -1;
         }
         
         /* Sidebar Styles */
@@ -34,11 +47,12 @@
             left: -300px;
             width: 300px;
             height: 100vh;
-            background: var(--army-dark);
+            background: rgba(0, 0, 0, 0.95);
             transition: left 0.3s ease;
             z-index: 1000;
             padding: 20px;
             border-right: 2px solid var(--army-light);
+            backdrop-filter: blur(10px);
         }
         
         .sidebar.active {
@@ -57,6 +71,7 @@
             cursor: pointer;
             z-index: 1001;
             border-radius: 4px;
+            border: 1px solid var(--army-light);
         }
         
         .sidebar h2 {
@@ -83,14 +98,16 @@
             padding: 12px 15px;
             display: block;
             border-radius: 4px;
-            transition: background 0.3s;
+            transition: all 0.3s;
             border-left: 3px solid transparent;
+            background: rgba(45, 50, 16, 0.3);
         }
         
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
             background: var(--army-green);
             border-left: 3px solid var(--army-light);
+            transform: translateX(5px);
         }
         
         /* Main Content */
@@ -98,14 +115,17 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 80px 20px 40px;
+            position: relative;
+            z-index: 1;
         }
         
         /* Header Image */
         .header-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://i.postimg.cc/HLcZ4RgH/osnova-2.png');
+            background: 
+                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+                url('https://i.postimg.cc/HLcZ4RgH/osnova-2.png');
             background-size: cover;
             background-position: center;
             border-radius: 8px;
@@ -113,18 +133,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--army-light);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         
         /* Welcome Section */
         .welcome-section {
             text-align: center;
             margin-bottom: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--army-light);
+            backdrop-filter: blur(10px);
         }
         
         .welcome-section h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .welcome-section p {
@@ -144,27 +172,32 @@
         }
         
         .card {
-            background: rgba(75, 83, 32, 0.8);
+            background: rgba(45, 50, 16, 0.4);
             border: 1px solid var(--army-light);
             border-radius: 8px;
             padding: 30px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
+            transition: all 0.3s;
             min-height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .card:hover {
             transform: translateY(-5px);
-            background: rgba(75, 83, 32, 1);
+            background: rgba(45, 50, 16, 0.6);
+            border-color: #5a6320;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         
         .card h3 {
             font-size: 1.5rem;
             color: var(--text-light);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         /* Pages */
@@ -185,7 +218,7 @@
         }
         
         .chapter-card {
-            background: rgba(75, 83, 32, 0.8);
+            background: rgba(45, 50, 16, 0.4);
             border: 1px solid var(--army-light);
             border-radius: 8px;
             padding: 25px;
@@ -196,28 +229,34 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .chapter-card:hover {
-            background: rgba(75, 83, 32, 1);
+            background: rgba(45, 50, 16, 0.6);
             transform: scale(1.05);
-            border-color: var(--text-light);
+            border-color: #5a6320;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         
         .chapter-card h4 {
             font-size: 1.1rem;
             color: var(--text-light);
             line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         /* Content Pages */
         .content-page {
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--army-light);
             border-radius: 8px;
             padding: 30px;
             margin-top: 20px;
             min-height: 500px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
         
         .content-header {
@@ -233,7 +272,7 @@
         }
         
         .edit-section {
-            background: rgba(75, 83, 32, 0.3);
+            background: rgba(45, 50, 16, 0.3);
             padding: 20px;
             border-radius: 6px;
             margin-top: 30px;
@@ -243,7 +282,7 @@
         .edit-textarea {
             width: 100%;
             height: 300px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--army-light);
             border-radius: 4px;
             color: var(--text-light);
@@ -251,6 +290,12 @@
             font-size: 1rem;
             resize: vertical;
             margin-bottom: 15px;
+        }
+        
+        .edit-textarea:focus {
+            outline: none;
+            border-color: #5a6320;
+            box-shadow: 0 0 10px rgba(90, 99, 32, 0.3);
         }
         
         .edit-button {
@@ -262,6 +307,7 @@
             cursor: pointer;
             font-size: 1rem;
             transition: background 0.3s;
+            border: 1px solid var(--army-light);
         }
         
         .edit-button:hover {
@@ -278,11 +324,13 @@
             cursor: pointer;
             font-size: 1rem;
             margin-bottom: 30px;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            border: 1px solid var(--army-light);
         }
         
         .back-button:hover {
             background: var(--army-light);
+            transform: translateX(-3px);
         }
         
         /* RP Tasks Section */
@@ -291,17 +339,21 @@
         }
         
         .rp-card {
-            background: rgba(75, 83, 32, 0.8);
+            background: rgba(45, 50, 16, 0.4);
             border: 1px solid var(--army-light);
             border-radius: 8px;
             padding: 25px;
             margin-bottom: 20px;
-            transition: background 0.3s;
+            transition: all 0.3s;
             cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .rp-card:hover {
-            background: rgba(75, 83, 32, 1);
+            background: rgba(45, 50, 16, 0.6);
+            transform: translateY(-3px);
+            border-color: #5a6320;
         }
         
         .rp-card h4 {
@@ -328,10 +380,16 @@
             .welcome-section h1 {
                 font-size: 2rem;
             }
+            
+            .welcome-section {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="background-overlay"></div>
+    
     <!-- Sidebar Menu -->
     <button class="menu-toggle">☰</button>
     
