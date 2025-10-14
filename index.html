@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Military Academy - Посібник</title>
     <style>
+        :root {
+            --army-dark: #000000;
+            --army-green: #4B5320;
+            --army-light: #6B8E23;
+            --text-light: #f0f0f0;
+            --text-gray: #cccccc;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,23 +21,24 @@
         }
         
         body {
-            background: #0a0f0a;
-            color: #e8e8e8;
+            background: linear-gradient(135deg, var(--army-dark) 0%, var(--army-green) 100%);
+            color: var(--text-light);
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        /* Sidebar */
+        /* Sidebar Styles */
         .sidebar {
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
+            left: -300px;
+            width: 300px;
             height: 100vh;
-            background: #1a1f1a;
+            background: var(--army-dark);
             transition: left 0.3s ease;
             z-index: 1000;
             padding: 20px;
-            border-right: 2px solid #4a5320;
+            border-right: 2px solid var(--army-light);
         }
         
         .sidebar.active {
@@ -38,23 +47,24 @@
         
         .menu-toggle {
             position: fixed;
-            top: 15px;
-            left: 15px;
-            background: #4a5320;
+            top: 20px;
+            left: 20px;
+            background: var(--army-green);
             border: none;
-            color: white;
-            font-size: 20px;
-            padding: 10px;
+            color: var(--text-light);
+            font-size: 24px;
+            padding: 10px 15px;
             cursor: pointer;
             z-index: 1001;
             border-radius: 4px;
         }
         
         .sidebar h2 {
-            color: #e8e8e8;
+            color: var(--text-light);
             margin-bottom: 30px;
             text-align: center;
-            border-bottom: 1px solid #4a5320;
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--army-light);
             padding-bottom: 10px;
         }
         
@@ -63,81 +73,85 @@
         }
         
         .sidebar-nav li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .sidebar-nav a {
-            color: #e8e8e8;
+            color: var(--text-light);
             text-decoration: none;
-            padding: 12px;
+            font-size: 1.1rem;
+            padding: 12px 15px;
             display: block;
             border-radius: 4px;
             transition: background 0.3s;
             border-left: 3px solid transparent;
         }
         
-        .sidebar-nav a:hover {
-            background: #4a5320;
-            border-left: 3px solid #6b8e23;
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--army-green);
+            border-left: 3px solid var(--army-light);
         }
         
         /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 60px 20px 20px;
+            padding: 80px 20px 40px;
         }
         
-        /* Header */
-        .header {
-            background: url('https://i.postimg.cc/QMNs8cRD/Chat-GPT-Image-13-2025-21-05-32.png');
+        /* Header Image */
+        .header-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://i.postimg.cc/HLcZ4RgH/osnova-2.png');
             background-size: cover;
             background-position: center;
-            height: 250px;
+            border-radius: 8px;
             margin-bottom: 30px;
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* Welcome */
-        .welcome {
+        /* Welcome Section */
+        .welcome-section {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(74, 83, 32, 0.1);
-            border-radius: 8px;
-            border: 1px solid #4a5320;
+            margin-bottom: 50px;
         }
         
-        .welcome h1 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #e8e8e8;
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
         }
         
-        .welcome p {
-            color: #cccccc;
-            line-height: 1.6;
-            max-width: 600px;
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 800px;
             margin: 0 auto;
+            line-height: 1.6;
         }
         
-        /* Cards */
-        .cards {
+        /* Quick Cards */
+        .quick-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
         }
         
         .card {
-            background: rgba(74, 83, 32, 0.2);
-            border: 1px solid #4a5320;
+            background: rgba(75, 83, 32, 0.8);
+            border: 1px solid var(--army-light);
             border-radius: 8px;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            min-height: 120px;
+            transition: transform 0.3s, background 0.3s;
+            min-height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -145,13 +159,12 @@
         
         .card:hover {
             transform: translateY(-5px);
-            background: rgba(74, 83, 32, 0.4);
-            border-color: #6b8e23;
+            background: rgba(75, 83, 32, 1);
         }
         
         .card h3 {
-            font-size: 1.3rem;
-            color: #e8e8e8;
+            font-size: 1.5rem;
+            color: var(--text-light);
         }
         
         /* Pages */
@@ -163,102 +176,173 @@
             display: block;
         }
         
-        /* Chapters */
-        .chapters {
+        /* Chapters Grid */
+        .chapters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
         
-        .chapter {
-            background: rgba(74, 83, 32, 0.2);
-            border: 1px solid #4a5320;
+        .chapter-card {
+            background: rgba(75, 83, 32, 0.8);
+            border: 1px solid var(--army-light);
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px;
             cursor: pointer;
             transition: all 0.3s;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
         }
         
-        .chapter:hover {
-            background: rgba(74, 83, 32, 0.4);
+        .chapter-card:hover {
+            background: rgba(75, 83, 32, 1);
             transform: scale(1.05);
+            border-color: var(--text-light);
         }
         
-        .chapter h4 {
-            color: #e8e8e8;
+        .chapter-card h4 {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+        
+        /* Content Pages */
+        .content-page {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--army-light);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 20px;
+            min-height: 500px;
+        }
+        
+        .content-header {
+            border-bottom: 1px solid var(--army-light);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .content-body {
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+        
+        .edit-section {
+            background: rgba(75, 83, 32, 0.3);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+            border-left: 4px solid var(--army-light);
+        }
+        
+        .edit-textarea {
+            width: 100%;
+            height: 300px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid var(--army-light);
+            border-radius: 4px;
+            color: var(--text-light);
+            padding: 15px;
             font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .edit-button {
+            background: var(--army-green);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .edit-button:hover {
+            background: var(--army-light);
         }
         
         /* Back Button */
-        .back-btn {
-            background: #4a5320;
-            color: white;
+        .back-button {
+            background: var(--army-green);
+            color: var(--text-light);
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 4px;
             cursor: pointer;
-            margin-bottom: 20px;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            transition: background 0.3s;
         }
         
-        .back-btn:hover {
-            background: #5a6320;
+        .back-button:hover {
+            background: var(--army-light);
         }
         
-        /* Content Page */
-        .content-page {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #4a5320;
+        /* RP Tasks Section */
+        .rp-tasks {
+            margin-top: 50px;
+        }
+        
+        .rp-card {
+            background: rgba(75, 83, 32, 0.8);
+            border: 1px solid var(--army-light);
             border-radius: 8px;
             padding: 25px;
-            margin-top: 20px;
-        }
-        
-        .content-page h2 {
-            border-bottom: 1px solid #4a5320;
-            padding-bottom: 15px;
             margin-bottom: 20px;
-            color: #e8e8e8;
-        }
-        
-        .edit-area {
-            width: 100%;
-            height: 300px;
-            background: #1a1f1a;
-            border: 1px solid #4a5320;
-            border-radius: 4px;
-            color: #e8e8e8;
-            padding: 15px;
-            margin: 15px 0;
-            resize: vertical;
-        }
-        
-        .save-btn {
-            background: #4a5320;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            transition: background 0.3s;
             cursor: pointer;
         }
         
-        .save-btn:hover {
-            background: #5a6320;
+        .rp-card:hover {
+            background: rgba(75, 83, 32, 1);
+        }
+        
+        .rp-card h4 {
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+                left: -250px;
+            }
+            
+            .quick-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .chapters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
+    <!-- Sidebar Menu -->
     <button class="menu-toggle">☰</button>
+    
     <div class="sidebar">
         <h2>Military Academy</h2>
         <ul class="sidebar-nav">
-            <li><a href="#" data-page="home">Головна</a></li>
-            <li><a href="#" data-page="exams">Іспити</a></li>
-            <li><a href="#" data-page="lectures">Лекції</a></li>
-            <li><a href="#" data-page="training">Тренування</a></li>
-            <li><a href="#" data-page="tasks">РП Завдання</a></li>
+            <li><a href="#" class="nav-link active" data-page="home">Головна</a></li>
+            <li><a href="#" class="nav-link" data-page="exams">Іспити</a></li>
+            <li><a href="#" class="nav-link" data-page="lectures">Лекції</a></li>
+            <li><a href="#" class="nav-link" data-page="training">Тренування</a></li>
+            <li><a href="#" class="nav-link" data-page="tasks">РП Завдання</a></li>
         </ul>
     </div>
 
@@ -266,14 +350,14 @@
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
-            <div class="header"></div>
+            <div class="header-image"></div>
             
-            <div class="welcome">
+            <div class="welcome-section">
                 <h1>Шановні інструктори!</h1>
                 <p>Цей посібник створений для допомоги інструкторам Military Academy у виконанні службових обов'язків, проведенні навчальних занять та підготовці курсантів.</p>
             </div>
 
-            <div class="cards">
+            <div class="quick-cards">
                 <div class="card" data-page="exams">
                     <h3>Іспити</h3>
                 </div>
@@ -285,7 +369,7 @@
                 </div>
             </div>
 
-            <div class="cards">
+            <div class="rp-tasks">
                 <div class="card" data-page="tasks">
                     <h3>РП Завдання</h3>
                 </div>
@@ -294,28 +378,28 @@
 
         <!-- Exams Page -->
         <div id="exams" class="page">
-            <button class="back-btn" onclick="showPage('home')">← Назад</button>
+            <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
             <h2>Іспити</h2>
-            <div class="chapters">
-                <div class="chapter" onclick="showContent('Іспит | Присяга')">
+            <div class="chapters-grid">
+                <div class="chapter-card" onclick="showContentPage('exam-prisyaga', 'Іспит | Присяга')">
                     <h4>Іспит | Присяга</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Іспит | Стройовий статут')">
+                <div class="chapter-card" onclick="showContentPage('exam-stroyoviy', 'Іспит | Стройовий статут')">
                     <h4>Іспит | Стройовий статут</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Іспит | Внутрішній статут')">
+                <div class="chapter-card" onclick="showContentPage('exam-vnutrishniy', 'Іспит | Внутрішній статут')">
                     <h4>Іспит | Внутрішній статут</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Іспит | Тен/коди та коди')">
+                <div class="chapter-card" onclick="showContentPage('exam-ten-kody', 'Іспит | Тен/коди та коди')">
                     <h4>Іспит | Тен/коди та коди</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Іспит | Існуючи зони ФЗ')">
+                <div class="chapter-card" onclick="showContentPage('exam-zony-fz', 'Іспит | Існуючи зони ФЗ')">
                     <h4>Іспит | Існуючи зони ФЗ</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Іспит | Дисциплінарний статут')">
+                <div class="chapter-card" onclick="showContentPage('exam-dystsyplinarniy', 'Іспит | Дисциплінарний статут')">
                     <h4>Іспит | Дисциплінарний статут</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Іспит | Субординація')">
+                <div class="chapter-card" onclick="showContentPage('exam-subordynatsiya', 'Іспит | Субординація')">
                     <h4>Іспит | Субординація</h4>
                 </div>
             </div>
@@ -323,22 +407,22 @@
 
         <!-- Lectures Page -->
         <div id="lectures" class="page">
-            <button class="back-btn" onclick="showPage('home')">← Назад</button>
+            <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
             <h2>Лекції</h2>
-            <div class="chapters">
-                <div class="chapter" onclick="showContent('Лекція | Стройовий статут')">
+            <div class="chapters-grid">
+                <div class="chapter-card" onclick="showContentPage('lecture-stroyoviy', 'Лекція | Стройовий статут')">
                     <h4>Лекція | Стройовий статут</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Лекція | Внутрішній статут')">
+                <div class="chapter-card" onclick="showContentPage('lecture-vnutrishniy', 'Лекція | Внутрішній статут')">
                     <h4>Лекція | Внутрішній статут</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Лекція | Тен/коди та коди')">
+                <div class="chapter-card" onclick="showContentPage('lecture-ten-kody', 'Лекція | Тен/коди та коди')">
                     <h4>Лекція | Тен/коди та коди</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Лекція | Існуючи зони ФЗ')">
-                    <h4>Лекція | Існучи зони ФЗ</h4>
+                <div class="chapter-card" onclick="showContentPage('lecture-zony-fz', 'Лекція | Існуючи зони ФЗ')">
+                    <h4>Лекція | Існуючи зони ФЗ</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Лекція | Дисциплінарний Статут')">
+                <div class="chapter-card" onclick="showContentPage('lecture-dystsyplinarniy', 'Лекція | Дисциплінарний Статут')">
                     <h4>Лекція | Дисциплінарний Статут</h4>
                 </div>
             </div>
@@ -346,19 +430,19 @@
 
         <!-- Training Page -->
         <div id="training" class="page">
-            <button class="back-btn" onclick="showPage('home')">← Назад</button>
+            <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
             <h2>Тренування</h2>
-            <div class="chapters">
-                <div class="chapter" onclick="showContent('Тренування | Фізична підготовка')">
+            <div class="chapters-grid">
+                <div class="chapter-card" onclick="showContentPage('training-physical', 'Тренування | Фізична підготовка')">
                     <h4>Тренування | Фізична підготовка</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Тренування | Тактичне тренування')">
+                <div class="chapter-card" onclick="showContentPage('training-tactical', 'Тренування | Тактичне тренування')">
                     <h4>Тренування | Тактичне тренування</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Тренування | Медична підготовка')">
+                <div class="chapter-card" onclick="showContentPage('training-medical', 'Тренування | Медична підготовка')">
                     <h4>Тренування | Медична підготовка</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Тренування | Навики виживання')">
+                <div class="chapter-card" onclick="showContentPage('training-survival', 'Тренування | Навики виживання')">
                     <h4>Тренування | Навики виживання</h4>
                 </div>
             </div>
@@ -366,98 +450,190 @@
 
         <!-- Tasks Page -->
         <div id="tasks" class="page">
-            <button class="back-btn" onclick="showPage('home')">← Назад</button>
+            <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
             <h2>РП Завдання</h2>
-            <div class="chapters">
-                <div class="chapter" onclick="showContent('Прибирання на АКПП')">
+            <div class="chapters-grid">
+                <div class="chapter-card" onclick="showContentPage('task-cleaning-akpp', 'Прибирання на АКПП')">
                     <h4>Прибирання на АКПП</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Прибирання на вежах')">
+                <div class="chapter-card" onclick="showContentPage('task-cleaning-towers', 'Прибирання на вежах')">
                     <h4>Прибирання на вежах</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Заміна масла')">
+                <div class="chapter-card" onclick="showContentPage('task-oil-change', 'Заміна масла')">
                     <h4>Заміна масла</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Чистка автомобіля')">
+                <div class="chapter-card" onclick="showContentPage('task-car-cleaning', 'Чистка автомобіля')">
                     <h4>Чистка автомобіля</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Зборка зброї')">
+                <div class="chapter-card" onclick="showContentPage('task-weapon-assembly', 'Зборка зброї')">
                     <h4>Зборка зброї</h4>
                 </div>
-                <div class="chapter" onclick="showContent('Чистка зброї')">
+                <div class="chapter-card" onclick="showContentPage('task-weapon-cleaning', 'Чистка зброї')">
                     <h4>Чистка зброї</h4>
                 </div>
             </div>
         </div>
 
-        <!-- Content Display -->
-        <div id="content-page" class="page">
-            <button class="back-btn" onclick="showPage('home')">← Назад</button>
-            <div class="content-page">
-                <h2 id="content-title">Заголовок</h2>
-                <div id="content-display">
-                    Тут буде контент...
-                </div>
-                <textarea class="edit-area" id="content-edit" placeholder="Введіть текст тут..."></textarea>
-                <button class="save-btn" onclick="saveContent()">Зберегти</button>
-            </div>
-        </div>
+        <!-- Content Pages Container -->
+        <div id="content-pages"></div>
     </div>
 
     <script>
         // Sidebar toggle
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('active');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
 
-        // Navigation
+        // Page navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const cards = document.querySelectorAll('.card');
+        const pages = document.querySelectorAll('.page');
+        const contentPages = document.getElementById('content-pages');
+
+        // Storage for content
+        const contentStorage = {
+            // Exams
+            'exam-prisyaga': '# Тут буде контент для Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни',
+            'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*',
+            'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
+            'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
+            'exam-zony-fz': '# Іспит | Існуючи зони ФЗ\n\n*Текст ще не додано*',
+            'exam-dystsyplinarniy': '# Іспит | Дисциплінарний статут\n\n*Текст ще не додано*',
+            'exam-subordynatsiya': '# Іспит | Субординація\n\n*Текст ще не додано*',
+            
+            // Lectures
+            'lecture-stroyoviy': '# Лекція | Стройовий статут\n\n*Текст ще не додано*',
+            'lecture-vnutrishniy': '# Лекція | Внутрішній статут\n\n*Текст ще не додано*',
+            'lecture-ten-kody': '# Лекція | Тен/коди та коди\n\n*Текст ще не додано*',
+            'lecture-zony-fz': '# Лекція | Існуючи зони ФЗ\n\n*Текст ще не додано*',
+            'lecture-dystsyplinarniy': '# Лекція | Дисциплінарний Статут\n\n*Текст ще не додано*',
+            
+            // Training
+            'training-physical': '# Тренування | Фізична підготовка\n\n*Текст ще не додано*',
+            'training-tactical': '# Тренування | Тактичне тренування\n\n*Текст ще не додано*',
+            'training-medical': '# Тренування | Медична підготовка\n\n*Текст ще не додано*',
+            'training-survival': '# Тренування | Навики виживання\n\n*Текст ще не додано*',
+            
+            // Tasks
+            'task-cleaning-akpp': '# Прибирання на АКПП-1\\2\n\n*Текст ще не додано*',
+            'task-cleaning-towers': '# Прибирання на вежах\n\n*Текст ще не додано*',
+            'task-oil-change': '# Заміна масла у автомобіля\n\n*Текст ще не додано*',
+            'task-car-cleaning': '# Чистка автомобіля\n\n*Текст ще не додано*',
+            'task-weapon-assembly': '# Зборка та розборка зброї\n\n*Текст ще не додано*',
+            'task-weapon-cleaning': '# Чистка зброї\n\n*Текст ще не додано*'
+        };
+
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+            pages.forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            document.querySelector('.sidebar').classList.remove('active');
+            sidebar.classList.remove('active');
+            contentPages.innerHTML = '';
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
         }
 
-        // Content management
-        let currentContent = '';
-        
-        function showContent(title) {
-            currentContent = title;
-            document.getElementById('content-title').textContent = title;
-            document.getElementById('content-edit').value = localStorage.getItem(title) || 'Текст ще не додано...';
-            document.getElementById('content-display').textContent = localStorage.getItem(title) || 'Текст ще не додано...';
-            showPage('content-page');
+        function showContentPage(contentId, title) {
+            showPage('home');
+            contentPages.innerHTML = `
+                <div class="page active">
+                    <button class="back-button" onclick="showPage('${getParentPage(contentId)}')">← Назад</button>
+                    <div class="content-page">
+                        <div class="content-header">
+                            <h2>${title}</h2>
+                        </div>
+                        <div class="content-body" id="content-${contentId}">
+                            ${renderMarkdown(contentStorage[contentId])}
+                        </div>
+                        <div class="edit-section">
+                            <h4>Редагувати контент:</h4>
+                            <textarea class="edit-textarea" id="edit-${contentId}">${contentStorage[contentId]}</textarea>
+                            <button class="edit-button" onclick="saveContent('${contentId}')">Зберегти зміни</button>
+                            <p><small>Використовуйте Markdown для форматування тексту</small></p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        function saveContent() {
-            const content = document.getElementById('content-edit').value;
-            localStorage.setItem(currentContent, content);
-            document.getElementById('content-display').textContent = content;
-            alert('Збережено!');
+        function getParentPage(contentId) {
+            if (contentId.startsWith('exam-')) return 'exams';
+            if (contentId.startsWith('lecture-')) return 'lectures';
+            if (contentId.startsWith('training-')) return 'training';
+            if (contentId.startsWith('task-')) return 'tasks';
+            return 'home';
         }
 
-        // Sidebar links
-        document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
+        function renderMarkdown(text) {
+            // Simple markdown parser
+            return text
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                .replace(/\*(.*)\*/gim, '<em>$1</em>')
+                .replace(/\n/gim, '<br>')
+                .replace(/^- (.*$)/gim, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+        }
+
+        function saveContent(contentId) {
+            const textarea = document.getElementById(`edit-${contentId}`);
+            contentStorage[contentId] = textarea.value;
+            const contentElement = document.getElementById(`content-${contentId}`);
+            contentElement.innerHTML = renderMarkdown(contentStorage[contentId]);
+            alert('Зміни збережено!');
+        }
+
+        // Nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                showPage(this.getAttribute('data-page'));
+                const pageId = link.getAttribute('data-page');
+                showPage(pageId);
             });
         });
 
         // Card clicks
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function() {
-                showPage(this.getAttribute('data-page'));
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const pageId = card.getAttribute('data-page');
+                showPage(pageId);
             });
         });
 
         // Close sidebar when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.sidebar') && !e.target.closest('.menu-toggle')) {
-                document.querySelector('.sidebar').classList.remove('active');
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
             }
         });
+
+        // Load saved content from localStorage
+        function loadSavedContent() {
+            const saved = localStorage.getItem('military-academy-content');
+            if (saved) {
+                Object.assign(contentStorage, JSON.parse(saved));
+            }
+        }
+
+        // Save content to localStorage
+        function saveToStorage() {
+            localStorage.setItem('military-academy-content', JSON.stringify(contentStorage));
+        }
+
+        // Initialize
+        loadSavedContent();
+        // Auto-save every 30 seconds
+        setInterval(saveToStorage, 30000);
     </script>
 </body>
 </html>
