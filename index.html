@@ -6,11 +6,12 @@
     <title>Military Academy - Посібник</title>
     <style>
         :root {
-            --army-dark: #000000;
-            --army-green: #2D3210;
-            --army-light: #4A5320;
+            --army-dark: #0a0a0a;
+            --army-gray: #1a1a1a;
+            --army-light: #2a2a2a;
+            --accent-green: #4B5320;
             --text-light: #f0f0f0;
-            --text-gray: #aaaaaa;
+            --text-gray: #b0b0b0;
         }
         
         * {
@@ -21,7 +22,7 @@
         }
         
         body {
-            background: #050805;
+            background: var(--army-dark);
             color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
@@ -34,9 +35,8 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(45, 50, 16, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(74, 83, 32, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.4) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(42, 42, 42, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(26, 26, 26, 0.3) 0%, transparent 50%);
             z-index: -1;
         }
         
@@ -47,12 +47,11 @@
             left: -300px;
             width: 300px;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
+            background: var(--army-gray);
             transition: left 0.3s ease;
             z-index: 1000;
             padding: 20px;
             border-right: 2px solid var(--army-light);
-            backdrop-filter: blur(10px);
         }
         
         .sidebar.active {
@@ -63,7 +62,7 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background: var(--army-green);
+            background: var(--army-light);
             border: none;
             color: var(--text-light);
             font-size: 24px;
@@ -71,7 +70,7 @@
             cursor: pointer;
             z-index: 1001;
             border-radius: 4px;
-            border: 1px solid var(--army-light);
+            border: 1px solid #3a3a3a;
         }
         
         .sidebar h2 {
@@ -100,13 +99,13 @@
             border-radius: 4px;
             transition: all 0.3s;
             border-left: 3px solid transparent;
-            background: rgba(45, 50, 16, 0.3);
+            background: var(--army-light);
         }
         
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
-            background: var(--army-green);
-            border-left: 3px solid var(--army-light);
+            background: var(--accent-green);
+            border-left: 3px solid #5a6320;
             transform: translateX(5px);
         }
         
@@ -124,35 +123,29 @@
             width: 100%;
             height: 200px;
             background: 
-                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+                linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.9)),
                 url('https://i.postimg.cc/HLcZ4RgH/osnova-2.png');
             background-size: cover;
             background-position: center;
             border-radius: 8px;
             margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             border: 1px solid var(--army-light);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         
         /* Welcome Section */
         .welcome-section {
             text-align: center;
             margin-bottom: 50px;
-            background: rgba(0, 0, 0, 0.6);
+            background: var(--army-gray);
             padding: 40px;
             border-radius: 8px;
             border: 1px solid var(--army-light);
-            backdrop-filter: blur(10px);
         }
         
         .welcome-section h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--text-light);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .welcome-section p {
@@ -172,8 +165,8 @@
         }
         
         .card {
-            background: rgba(45, 50, 16, 0.4);
-            border: 1px solid var(--army-light);
+            background: var(--army-light);
+            border: 1px solid #3a3a3a;
             border-radius: 8px;
             padding: 30px;
             text-align: center;
@@ -183,21 +176,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .card:hover {
             transform: translateY(-5px);
-            background: rgba(45, 50, 16, 0.6);
+            background: var(--accent-green);
             border-color: #5a6320;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
         
         .card h3 {
             font-size: 1.5rem;
             color: var(--text-light);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         /* Pages */
@@ -218,8 +208,8 @@
         }
         
         .chapter-card {
-            background: rgba(45, 50, 16, 0.4);
-            border: 1px solid var(--army-light);
+            background: var(--army-light);
+            border: 1px solid #3a3a3a;
             border-radius: 8px;
             padding: 25px;
             cursor: pointer;
@@ -229,34 +219,29 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .chapter-card:hover {
-            background: rgba(45, 50, 16, 0.6);
+            background: var(--accent-green);
             transform: scale(1.05);
             border-color: #5a6320;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
         
         .chapter-card h4 {
             font-size: 1.1rem;
             color: var(--text-light);
             line-height: 1.4;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         /* Content Pages */
         .content-page {
-            background: rgba(0, 0, 0, 0.7);
+            background: var(--army-gray);
             border: 1px solid var(--army-light);
             border-radius: 8px;
             padding: 30px;
             margin-top: 20px;
             min-height: 500px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
         
         .content-header {
@@ -272,17 +257,17 @@
         }
         
         .edit-section {
-            background: rgba(45, 50, 16, 0.3);
+            background: var(--army-light);
             padding: 20px;
             border-radius: 6px;
             margin-top: 30px;
-            border-left: 4px solid var(--army-light);
+            border-left: 4px solid var(--accent-green);
         }
         
         .edit-textarea {
             width: 100%;
             height: 300px;
-            background: rgba(0, 0, 0, 0.6);
+            background: var(--army-dark);
             border: 1px solid var(--army-light);
             border-radius: 4px;
             color: var(--text-light);
@@ -294,12 +279,11 @@
         
         .edit-textarea:focus {
             outline: none;
-            border-color: #5a6320;
-            box-shadow: 0 0 10px rgba(90, 99, 32, 0.3);
+            border-color: var(--accent-green);
         }
         
         .edit-button {
-            background: var(--army-green);
+            background: var(--accent-green);
             color: var(--text-light);
             border: none;
             padding: 10px 20px;
@@ -307,16 +291,15 @@
             cursor: pointer;
             font-size: 1rem;
             transition: background 0.3s;
-            border: 1px solid var(--army-light);
         }
         
         .edit-button:hover {
-            background: var(--army-light);
+            background: #5a6320;
         }
         
         /* Back Button */
         .back-button {
-            background: var(--army-green);
+            background: var(--accent-green);
             color: var(--text-light);
             border: none;
             padding: 12px 25px;
@@ -325,41 +308,16 @@
             font-size: 1rem;
             margin-bottom: 30px;
             transition: all 0.3s;
-            border: 1px solid var(--army-light);
         }
         
         .back-button:hover {
-            background: var(--army-light);
+            background: #5a6320;
             transform: translateX(-3px);
         }
         
         /* RP Tasks Section */
         .rp-tasks {
             margin-top: 50px;
-        }
-        
-        .rp-card {
-            background: rgba(45, 50, 16, 0.4);
-            border: 1px solid var(--army-light);
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .rp-card:hover {
-            background: rgba(45, 50, 16, 0.6);
-            transform: translateY(-3px);
-            border-color: #5a6320;
-        }
-        
-        .rp-card h4 {
-            color: var(--text-light);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
         }
         
         /* Responsive */
