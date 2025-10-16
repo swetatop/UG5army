@@ -16,6 +16,8 @@
             --card-gradient: linear-gradient(135deg, #1D1F2A 0%, #2f0a5e 100%);
             --card-gradient-hover: linear-gradient(135deg, #2A2C3A 0%, #3f0b7a 100%);
             --text-gray: #A0A0A0;
+            --success: #4CAF50;
+            --error: #f44336;
         }
         
         * {
@@ -62,6 +64,238 @@
                 radial-gradient(circle at 80% 70%, rgba(47, 10, 94, 0.2) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%);
             z-index: -1;
+        }
+        
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .auth-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-content {
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .auth-tab.active {
+            border-bottom: 2px solid #4A90E2;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-gray);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(26, 31, 46, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: var(--text);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+        
+        .auth-button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            border: none;
+            border-radius: 6px;
+            color: var(--text);
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .auth-button:hover {
+            background: var(--primary-hover);
+        }
+        
+        .auth-message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .auth-message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--success);
+            display: block;
+        }
+        
+        .auth-message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid var(--error);
+            display: block;
+        }
+        
+        /* User Panel */
+        .user-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info {
+            background: var(--primary);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .admin-button {
+            background: var(--primary);
+            border: none;
+            color: var(--text);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .admin-button:hover {
+            background: var(--primary-hover);
+        }
+        
+        .login-button {
+            background: var(--primary);
+            border: none;
+            color: var(--text);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .login-button:hover {
+            background: var(--primary-hover);
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            z-index: 2001;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        
+        .admin-panel.active {
+            display: block;
+        }
+        
+        .admin-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .admin-overlay.active {
+            display: block;
+        }
+        
+        .users-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+            background: rgba(26, 31, 46, 0.6);
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .user-item:last-child {
+            border-bottom: none;
+        }
+        
+        .user-actions button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .delete-user {
+            background: var(--error);
+            color: white;
         }
         
         /* Sidebar Styles */
@@ -507,11 +741,64 @@
             .nav-buttons {
                 grid-template-columns: 1fr;
             }
+            
+            .user-panel {
+                position: static;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="background-overlay"></div>
+    
+    <!-- Auth Modal -->
+    <div class="auth-modal">
+        <div class="auth-content">
+            <h3 style="text-align: center; margin-bottom: 20px;">Вхід для адміністратора</h3>
+            
+            <div class="auth-form active" id="login-form">
+                <div class="form-group">
+                    <label>Логін:</label>
+                    <input type="text" id="login-username" placeholder="Введіть логін">
+                </div>
+                <div class="form-group">
+                    <label>Пароль:</label>
+                    <input type="password" id="login-password" placeholder="Введіть пароль">
+                </div>
+                <button class="auth-button" onclick="login()">Увійти</button>
+                <div class="auth-message" id="login-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-overlay"></div>
+    <div class="admin-panel">
+        <h3>Панель адміністратора</h3>
+        <div class="form-group">
+            <label>Додати нового адміністратора:</label>
+            <input type="text" id="new-username" placeholder="Логін нового адміністратора">
+            <input type="password" id="new-password" placeholder="Пароль нового адміністратора" style="margin-top: 10px;">
+            <button class="auth-button" onclick="addUser()" style="margin-top: 10px;">Додати адміністратора</button>
+        </div>
+        
+        <h4>Список адміністраторів:</h4>
+        <div class="users-list" id="users-list">
+            <!-- Users will be listed here -->
+        </div>
+        
+        <button class="auth-button" onclick="closeAdminPanel()">Закрити</button>
+    </div>
+
+    <!-- User Panel -->
+    <div class="user-panel">
+        <button class="login-button" onclick="showLoginModal()" id="login-btn">Вхід для адміністратора</button>
+        <div class="user-info" id="user-info" style="display: none;"></div>
+        <button class="admin-button" onclick="showAdminPanel()" id="admin-btn" style="display: none;">Адмін-панель</button>
+        <button class="admin-button" onclick="logout()" id="logout-btn" style="display: none;">Вийти</button>
+    </div>
     
     <!-- Sidebar Menu -->
     <button class="menu-toggle">☰ Меню</button>
@@ -717,12 +1004,219 @@
     </div>
 
     <script>
+        // User management system
+        let currentUser = null;
+        let users = {};
+        let contentStorage = {};
+
+        // Initialize users and content
+        function initializeData() {
+            const savedUsers = localStorage.getItem('military-academy-users');
+            const savedContent = localStorage.getItem('military-academy-content');
+            
+            if (savedUsers) {
+                users = JSON.parse(savedUsers);
+            } else {
+                // Create default admin user
+                users = {
+                    'admin': {
+                        password: 'admin123',
+                        isAdmin: true
+                    }
+                };
+                saveUsers();
+            }
+            
+            if (savedContent) {
+                contentStorage = JSON.parse(savedContent);
+            } else {
+                // Initialize default content
+                contentStorage = {
+                    // Exams
+                    'exam-prisyaga': '# Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни',
+                    'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*',
+                    'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
+                    'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
+                    'exam-zony-fz': '# Іспит | Існуючи зони ФЗ\n\n*Текст ще не додано*',
+                    'exam-dystsyplinarniy': '# Іспит | Дисциплінарний статут\n\n*Текст ще не додано*',
+                    'exam-subordynatsiya': '# Іспит | Субординація\n\n*Текст ще не додано*',
+                    
+                    // Lectures
+                    'lecture-stroyoviy': '# Лекція | Стройовий статут\n\n*Текст ще не додано*',
+                    'lecture-vnutrishniy': '# Лекція | Внутрішній статут\n\n*Текст ще не додано*',
+                    'lecture-ten-kody': '# Лекція | Тен/коди та коди\n\n*Текст ще не додано*',
+                    'lecture-zony-fz': '# Лекція | Існуючи зони ФЗ\n\n*Текст ще не додано*',
+                    'lecture-dystsyplinarniy': '# Лекція | Дисциплінарний Статут\n\n*Текст ще не додано*',
+                    
+                    // Training
+                    'training-physical': '# Тренування | Фізична підготовка\n\n*Текст ще не додано*',
+                    'training-tactical': '# Тренування | Тактичне тренування\n\n*Текст ще не додано*',
+                    'training-medical': '# Тренування | Медична підготовка\n\n*Текст ще не додано*',
+                    'training-survival': '# Тренування | Навики виживання\n\n*Текст ще не додано*',
+                    
+                    // Tasks
+                    'task-cleaning-akpp': '# Прибирання на АКПП-1\\2\n\n*Текст ще не додано*',
+                    'task-cleaning-towers': '# Прибирання на вежах\n\n*Текст ще не додано*',
+                    'task-oil-change': '# Заміна масла у автомобіля\n\n*Текст ще не додано*',
+                    'task-car-cleaning': '# Чистка автомобіля\n\n*Текст ще не додано*',
+                    'task-weapon-assembly': '# Зборка та розборка зброї\n\n*Текст ще не додано*',
+                    'task-weapon-cleaning': '# Чистка зброї\n\n*Текст ще не додано*'
+                };
+                saveContent();
+            }
+
+            updateUserPanel();
+        }
+
+        function saveUsers() {
+            localStorage.setItem('military-academy-users', JSON.stringify(users));
+        }
+
+        function saveContent() {
+            localStorage.setItem('military-academy-content', JSON.stringify(contentStorage));
+        }
+
+        // Auth functions
+        function showLoginModal() {
+            document.querySelector('.auth-modal').classList.add('active');
+        }
+
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const message = document.getElementById('login-message');
+
+            if (!username || !password) {
+                showMessage(message, 'Будь ласка, заповніть всі поля', 'error');
+                return;
+            }
+
+            if (users[username] && users[username].password === password && users[username].isAdmin) {
+                currentUser = {
+                    username: username,
+                    isAdmin: true
+                };
+                showMessage(message, 'Успішний вхід!', 'success');
+                setTimeout(() => {
+                    document.querySelector('.auth-modal').classList.remove('active');
+                    updateUserPanel();
+                }, 1000);
+            } else {
+                showMessage(message, 'Невірний логін або пароль', 'error');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            updateUserPanel();
+        }
+
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = 'auth-message ' + type;
+        }
+
+        function updateUserPanel() {
+            const loginBtn = document.getElementById('login-btn');
+            const userInfo = document.getElementById('user-info');
+            const adminBtn = document.getElementById('admin-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            if (currentUser) {
+                loginBtn.style.display = 'none';
+                userInfo.style.display = 'block';
+                userInfo.textContent = currentUser.username + ' (Адмін)';
+                adminBtn.style.display = 'block';
+                logoutBtn.style.display = 'block';
+            } else {
+                loginBtn.style.display = 'block';
+                userInfo.style.display = 'none';
+                adminBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        // Admin functions
+        function showAdminPanel() {
+            if (!currentUser || !currentUser.isAdmin) return;
+            
+            document.querySelector('.admin-overlay').classList.add('active');
+            document.querySelector('.admin-panel').classList.add('active');
+            updateUsersList();
+        }
+
+        function closeAdminPanel() {
+            document.querySelector('.admin-overlay').classList.remove('active');
+            document.querySelector('.admin-panel').classList.remove('active');
+        }
+
+        function addUser() {
+            const username = document.getElementById('new-username').value;
+            const password = document.getElementById('new-password').value;
+
+            if (!username || !password) {
+                alert('Будь ласка, заповніть всі поля');
+                return;
+            }
+
+            if (users[username]) {
+                alert('Користувач вже існує');
+                return;
+            }
+
+            users[username] = {
+                password: password,
+                isAdmin: true
+            };
+            saveUsers();
+            updateUsersList();
+
+            // Clear form
+            document.getElementById('new-username').value = '';
+            document.getElementById('new-password').value = '';
+
+            alert(`Адміністратор ${username} успішно доданий`);
+        }
+
+        function deleteUser(username) {
+            if (username === 'admin') {
+                alert('Не можна видалити головного адміністратора');
+                return;
+            }
+
+            if (confirm(`Видалити адміністратора ${username}?`)) {
+                delete users[username];
+                saveUsers();
+                updateUsersList();
+            }
+        }
+
+        function updateUsersList() {
+            const usersList = document.getElementById('users-list');
+            usersList.innerHTML = '';
+
+            Object.keys(users).forEach(username => {
+                if (users[username].isAdmin) {
+                    const userItem = document.createElement('div');
+                    userItem.className = 'user-item';
+                    userItem.innerHTML = `
+                        <span>${username} (Адмін)</span>
+                        <div class="user-actions">
+                            ${username !== 'admin' ? `<button class="delete-user" onclick="deleteUser('${username}')">Видалити</button>` : ''}
+                        </div>
+                    `;
+                    usersList.appendChild(userItem);
+                }
+            });
+        }
+
         // Sidebar toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const sidebar = document.querySelector('.sidebar');
         
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('active');
+            menuToggle.style.display = 'none';
         });
 
         // Page navigation
@@ -743,46 +1237,13 @@
             });
         }
 
-        // Storage for content
-        const contentStorage = {
-            // Exams
-            'exam-prisyaga': '# Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни',
-            'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*',
-            'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
-            'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
-            'exam-zony-fz': '# Іспит | Існуючи зони ФЗ\n\n*Текст ще не додано*',
-            'exam-dystsyplinarniy': '# Іспит | Дисциплінарний статут\n\n*Текст ще не додано*',
-            'exam-subordynatsiya': '# Іспит | Субординація\n\n*Текст ще не додано*',
-            
-            // Lectures
-            'lecture-stroyoviy': '# Лекція | Стройовий статут\n\n*Текст ще не додано*',
-            'lecture-vnutrishniy': '# Лекція | Внутрішній статут\n\n*Текст ще не додано*',
-            'lecture-ten-kody': '# Лекція | Тен/коди та коди\n\n*Текст ще не додано*',
-            'lecture-zony-fz': '# Лекція | Існуючи зони ФЗ\n\n*Текст ще не додано*',
-            'lecture-dystsyplinarniy': '# Лекція | Дисциплінарний Статут\n\n*Текст ще не додано*',
-            
-            // Training
-            'training-physical': '# Тренування | Фізична підготовка\n\n*Текст ще не додано*',
-            'training-tactical': '# Тренування | Тактичне тренування\n\n*Текст ще не додано*',
-            'training-medical': '# Тренування | Медична підготовка\n\n*Текст ще не додано*',
-            'training-survival': '# Тренування | Навики виживання\n\n*Текст ще не додано*',
-            
-            // Tasks
-            'task-cleaning-akpp': '# Прибирання на АКПП-1\\2\n\n*Текст ще не додано*',
-            'task-cleaning-towers': '# Прибирання на вежах\n\n*Текст ще не додано*',
-            'task-oil-change': '# Заміна масла у автомобіля\n\n*Текст ще не додано*',
-            'task-car-cleaning': '# Чистка автомобіля\n\n*Текст ще не додано*',
-            'task-weapon-assembly': '# Зборка та розборка зброї\n\n*Текст ще не додано*',
-            'task-weapon-cleaning': '# Чистка зброї\n\n*Текст ще не додано*'
-        };
-
         function showPage(pageId) {
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             sidebar.classList.remove('active');
             contentPages.innerHTML = '';
+            menuToggle.style.display = 'block';
             
-            // Update active nav link
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('data-page') === pageId) {
@@ -792,12 +1253,12 @@
         }
 
         function showContentPage(contentId, title) {
-            // Показуємо тільки контентну сторінку, без головної
             pages.forEach(page => page.classList.remove('active'));
             contentPages.innerHTML = '';
             
             const parentPage = getParentPage(contentId);
             const navButtons = getNavigationButtons(contentId, parentPage);
+            const canEdit = currentUser && currentUser.isAdmin;
             
             contentPages.innerHTML = `
                 <div class="page active">
@@ -809,24 +1270,36 @@
                         <div class="content-body" id="content-${contentId}">
                             ${renderMarkdown(contentStorage[contentId])}
                         </div>
+                        ${canEdit ? `
                         <div class="edit-section">
                             <h4>Редагувати контент:</h4>
                             <textarea class="edit-textarea" id="edit-${contentId}">${contentStorage[contentId]}</textarea>
-                            <button class="edit-button" onclick="saveContent('${contentId}')">Зберегти зміни</button>
+                            <button class="edit-button" onclick="saveContentItem('${contentId}')">Зберегти зміни</button>
                             <p><small>Використовуйте Markdown для форматування тексту</small></p>
                         </div>
+                        ` : ''}
                         ${navButtons}
                     </div>
                 </div>
             `;
             
-            // Update active nav link
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('data-page') === parentPage) {
                     link.classList.add('active');
                 }
             });
+        }
+
+        function saveContentItem(contentId) {
+            if (!currentUser || !currentUser.isAdmin) return;
+            
+            const textarea = document.getElementById(`edit-${contentId}`);
+            contentStorage[contentId] = textarea.value;
+            const contentElement = document.getElementById(`content-${contentId}`);
+            contentElement.innerHTML = renderMarkdown(contentStorage[contentId]);
+            saveContent();
+            alert('Зміни збережено!');
         }
 
         function getParentPage(contentId) {
@@ -899,20 +1372,13 @@
                 .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
         }
 
-        function saveContent(contentId) {
-            const textarea = document.getElementById(`edit-${contentId}`);
-            contentStorage[contentId] = textarea.value;
-            const contentElement = document.getElementById(`content-${contentId}`);
-            contentElement.innerHTML = renderMarkdown(contentStorage[contentId]);
-            alert('Зміни збережено!');
-        }
-
         // Nav links
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
                 showPage(pageId);
+                menuToggle.style.display = 'block';
             });
         });
 
@@ -928,27 +1394,26 @@
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
                 sidebar.classList.remove('active');
+                menuToggle.style.display = 'block';
                 dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
             }
         });
 
-        // Load saved content from localStorage
-        function loadSavedContent() {
-            const saved = localStorage.getItem('military-academy-content');
-            if (saved) {
-                Object.assign(contentStorage, JSON.parse(saved));
+        // Close modals when clicking outside
+        document.querySelector('.admin-overlay').addEventListener('click', closeAdminPanel);
+        document.querySelector('.auth-modal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('auth-modal')) {
+                document.querySelector('.auth-modal').classList.remove('active');
             }
-        }
-
-        // Save content to localStorage
-        function saveToStorage() {
-            localStorage.setItem('military-academy-content', JSON.stringify(contentStorage));
-        }
+        });
 
         // Initialize
-        loadSavedContent();
-        // Auto-save every 30 seconds
-        setInterval(saveToStorage, 30000);
+        initializeData();
+
+        // Default credentials info
+        console.log('Default admin credentials:');
+        console.log('Username: admin');
+        console.log('Password: admin123');
     </script>
 </body>
 </html>
