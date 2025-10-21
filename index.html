@@ -18,6 +18,8 @@
             --text-gray: #A0A0A0;
             --success: #4CAF50;
             --error: #f44336;
+            --link-color: #4A90E2;
+            --link-hover: #5A9AF2;
         }
         
         * {
@@ -589,6 +591,50 @@
             font-family: 'Arial', sans-serif;
         }
         
+        .content-body a {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .content-body a:hover {
+            color: var(--link-hover);
+            border-bottom: 1px solid var(--link-hover);
+        }
+        
+        .content-body ul, .content-body ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .content-body li {
+            margin-bottom: 5px;
+        }
+        
+        .content-body code {
+            background: rgba(26, 31, 46, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .content-body pre {
+            background: rgba(26, 31, 46, 0.8);
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .content-body blockquote {
+            border-left: 4px solid var(--link-color);
+            padding-left: 15px;
+            margin: 15px 0;
+            color: var(--text-gray);
+            font-style: italic;
+        }
+        
         .edit-section {
             background: rgba(45, 52, 72, 0.6);
             padding: 20px;
@@ -1033,8 +1079,8 @@
                 // Initialize default content
                 contentStorage = {
                     // Exams
-                    'exam-prisyaga': '# Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни',
-                    'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*',
+                    'exam-prisyaga': '# Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни\n\n## Приклад посилання:\n[Перейти на Google](https://www.google.com)\n\n## Додаткові ресурси:\n- [Discord сервер](https://discord.gg/example)\n- [YouTube канал](https://youtube.com/c/example)',
+                    'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*\n\n## Корисні посилання:\n[Посилання 1](https://example.com)\n[Посилання 2](https://example.org)',
                     'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
                     'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
                     'exam-zony-fz': '# Іспит | Існуючи зони ФЗ\n\n*Текст ще не додано*',
@@ -1362,14 +1408,25 @@
 
         function renderMarkdown(text) {
             return text
+                // Headers
                 .replace(/^# (.*$)/gim, '<h1>$1</h1>')
                 .replace(/^## (.*$)/gim, '<h2>$1</h2>')
                 .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                // Bold and Italic
                 .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
                 .replace(/\*(.*)\*/gim, '<em>$1</em>')
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+                // Line breaks
                 .replace(/\n/gim, '<br>')
+                // Lists
                 .replace(/^- (.*$)/gim, '<li>$1</li>')
-                .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+                .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
+                // Code blocks
+                .replace(/`([^`]+)`/gim, '<code>$1</code>')
+                .replace(/```([^`]+)```/gim, '<pre>$1</pre>')
+                // Blockquotes
+                .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
         }
 
         // Nav links
