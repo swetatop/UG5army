@@ -592,15 +592,16 @@
         }
         
         .content-body a {
-            color: var(--link-color);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
+            color: #4A90E2 !important;
+            text-decoration: none !important;
+            border-bottom: 1px solid #4A90E2;
             transition: all 0.3s ease;
+            cursor: pointer !important;
         }
         
         .content-body a:hover {
-            color: var(--link-hover);
-            border-bottom: 1px solid var(--link-hover);
+            color: #5A9AF2 !important;
+            border-bottom: 1px solid #5A9AF2;
         }
         
         .content-body ul, .content-body ol {
@@ -628,7 +629,7 @@
         }
         
         .content-body blockquote {
-            border-left: 4px solid var(--link-color);
+            border-left: 4px solid #4A90E2;
             padding-left: 15px;
             margin: 15px 0;
             color: var(--text-gray);
@@ -1079,7 +1080,7 @@
                 // Initialize default content
                 contentStorage = {
                     // Exams
-                    'exam-prisyaga': '# Іспит | Присяга\n\n## Інструкції:\n1. Введіть текст тут\n2. Використовуйте Markdown\n3. Збережіть зміни\n\n## Приклад посилання:\n[Перейти на Google](https://www.google.com)\n\n## Додаткові ресурси:\n- [Discord сервер](https://discord.gg/example)\n- [YouTube канал](https://youtube.com/c/example)',
+                    'exam-prisyaga': '# Іспит | Присяга\n\n## Тестові посилання:\n\n1. [Google Docs з повним URL](https://docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)\n\n2. [Google Docs без https](docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)\n\n3. [Звичайний Google](https://www.google.com)\n\n## Ваше посилання:\nСценарії в [Google Docs](https://docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)',
                     'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*\n\n## Корисні посилання:\n[Посилання 1](https://example.com)\n[Посилання 2](https://example.org)',
                     'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
                     'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
@@ -1112,6 +1113,9 @@
             }
 
             updateUserPanel();
+            
+            // Инициализация обработчиков ссылок
+            initContentLinks();
         }
 
         function saveUsers() {
@@ -1407,26 +1411,61 @@
         }
 
         function renderMarkdown(text) {
-            return text
-                // Headers
-                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                // Bold and Italic
-                .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-                .replace(/\*(.*)\*/gim, '<em>$1</em>')
-                // Links
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-                // Line breaks
-                .replace(/\n/gim, '<br>')
-                // Lists
-                .replace(/^- (.*$)/gim, '<li>$1</li>')
-                .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
-                // Code blocks
-                .replace(/`([^`]+)`/gim, '<code>$1</code>')
-                .replace(/```([^`]+)```/gim, '<pre>$1</pre>')
-                // Blockquotes
-                .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+            if (!text) return '';
+            
+            let html = text;
+            
+            // Headers
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            
+            // Bold and Italic
+            html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+            
+            // Links - полностью переписанная логика
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, function(match, linkText, linkUrl) {
+                // Убеждаемся, что URL корректен
+                let finalUrl = linkUrl.trim();
+                
+                // Проверяем, начинается ли URL с протокола
+                if (!finalUrl.match(/^[a-zA-Z]+:\/\//)) {
+                    finalUrl = 'https://' + finalUrl;
+                }
+                
+                console.log('Converting link:', linkText, '->', finalUrl);
+                return '<a href="' + finalUrl + '" target="_blank" rel="noopener noreferrer" style="color: #4A90E2 !important; text-decoration: none !important; border-bottom: 1px solid #4A90E2; cursor: pointer !important;">' + linkText + '</a>';
+            });
+            
+            // Line breaks
+            html = html.replace(/\n/gim, '<br>');
+            
+            // Lists
+            html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/gims, '<ul>$1</ul>');
+            
+            // Code blocks
+            html = html.replace(/`([^`]+)`/gim, '<code style="background: rgba(26,31,46,0.8); padding: 2px 6px; border-radius: 4px;">$1</code>');
+            html = html.replace(/```([^`]+)```/gims, '<pre style="background: rgba(26,31,46,0.8); padding: 15px; border-radius: 6px; overflow-x: auto;">$1</pre>');
+            
+            // Blockquotes
+            html = html.replace(/^> (.*$)/gim, '<blockquote style="border-left: 4px solid #4A90E2; padding-left: 15px; margin: 15px 0; color: #A0A0A0; font-style: italic;">$1</blockquote>');
+            
+            return html;
+        }
+
+        // Обработчик для ссылок в контенте
+        function initContentLinks() {
+            document.addEventListener('click', function(e) {
+                // Если клик по ссылке в контенте
+                if (e.target.matches('.content-body a')) {
+                    e.preventDefault();
+                    const url = e.target.href;
+                    console.log('Opening link:', url);
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                }
+            });
         }
 
         // Nav links
