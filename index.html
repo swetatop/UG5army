@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Military Academy / UG5</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <style>
         :root {
             --bg: #1A1F2E;
@@ -795,6 +799,28 @@
                 justify-content: center;
             }
         }
+        
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #4A90E2;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            text-align: center;
+            color: var(--text-gray);
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1051,79 +1077,212 @@
     </div>
 
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+    apiKey: "AIzaSyBJU9vxpn6bMQrCIzu4ixuYNAg_TjReNCY",
+    authDomain: "us-army-ukraine-gta5.firebaseapp.com",
+    databaseURL: "https://us-army-ukraine-gta5-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "us-army-ukraine-gta5",
+    storageBucket: "us-army-ukraine-gta5.firebasestorage.app",
+    messagingSenderId: "544783269993",
+    appId: "1:544783269993:web:55377448115351af7680c"
+};
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
         // User management system
         let currentUser = null;
-        let users = {};
         let contentStorage = {};
 
-        // Initialize users and content
+        // Initialize data
         function initializeData() {
-            const savedUsers = localStorage.getItem('military-academy-users');
-            const savedContent = localStorage.getItem('military-academy-content');
-            
-            if (savedUsers) {
-                users = JSON.parse(savedUsers);
-            } else {
-                // Create default admin user
-                users = {
-                    'admin': {
-                        password: 'admin123',
-                        isAdmin: true
-                    }
-                };
-                saveUsers();
-            }
-            
-            if (savedContent) {
-                contentStorage = JSON.parse(savedContent);
-            } else {
-                // Initialize default content
-                contentStorage = {
-                    // Exams
-                    'exam-prisyaga': '# Іспит | Присяга\n\n## Тестові посилання:\n\n1. [Google Docs з повним URL](https://docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)\n\n2. [Google Docs без https](docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)\n\n3. [Звичайний Google](https://www.google.com)\n\n## Ваше посилання:\nСценарії в [Google Docs](https://docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)',
-                    'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*\n\n## Корисні посилання:\n[Посилання 1](https://example.com)\n[Посилання 2](https://example.org)',
-                    'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
-                    'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
-                    'exam-zony-fz': '# Іспит | Існуючи зони ФЗ\n\n*Текст ще не додано*',
-                    'exam-dystsyplinarniy': '# Іспит | Дисциплінарний статут\n\n*Текст ще не додано*',
-                    'exam-subordynatsiya': '# Іспит | Субординація\n\n*Текст ще не додано*',
-                    
-                    // Lectures
-                    'lecture-stroyoviy': '# Лекція | Стройовий статут\n\n*Текст ще не додано*',
-                    'lecture-vnutrishniy': '# Лекція | Внутрішній статут\n\n*Текст ще не додано*',
-                    'lecture-ten-kody': '# Лекція | Тен/коди та коди\n\n*Текст ще не додано*',
-                    'lecture-zony-fz': '# Лекція | Існуючи зони ФЗ\n\n*Текст ще не додано*',
-                    'lecture-dystsyplinarniy': '# Лекція | Дисциплінарний Статут\n\n*Текст ще не додано*',
-                    
-                    // Training
-                    'training-physical': '# Тренування | Фізична підготовка\n\n*Текст ще не додано*',
-                    'training-tactical': '# Тренування | Тактичне тренування\n\n*Текст ще не додано*',
-                    'training-medical': '# Тренування | Медична підготовка\n\n*Текст ще не додано*',
-                    'training-survival': '# Тренування | Збір та розбирання зброї\n\n*Текст ще не додано*',
-                    
-                    // Tasks
-                    'task-cleaning-akpp': '# Прибирання на АКПП-1\\2\n\n*Текст ще не додано*',
-                    'task-cleaning-towers': '# Прибирання на вежах\n\n*Текст ще не додано*',
-                    'task-oil-change': '# Заміна масла у автомобіля\n\n*Текст ще не додано*',
-                    'task-car-cleaning': '# Чистка автомобіля\n\n*Текст ще не додано*',
-                    'task-weapon-assembly': '# Зборка та розборка зброї\n\n*Текст ще не додано*',
-                    'task-weapon-cleaning': '# Чистка зброї\n\n*Текст ще не додано*'
-                };
-                saveContent();
-            }
+            // Check if user is logged in
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    currentUser = {
+                        username: user.email.split('@')[0],
+                        isAdmin: true,
+                        uid: user.uid
+                    };
+                    updateUserPanel();
+                    loadContentFromFirebase();
+                } else {
+                    currentUser = null;
+                    updateUserPanel();
+                    loadContentFromFirebase();
+                }
+            });
 
-            updateUserPanel();
+            // Initialize content listeners
+            initContentListeners();
             
-            // Инициализация обработчиков ссылок
+            // Initialize content links
             initContentLinks();
         }
 
-        function saveUsers() {
-            localStorage.setItem('military-academy-users', JSON.stringify(users));
+        // Load content from Firebase
+        function loadContentFromFirebase() {
+            showLoading('Завантаження контенту...');
+            
+            database.ref('content').once('value')
+                .then((snapshot) => {
+                    const content = snapshot.val();
+                    if (content) {
+                        contentStorage = content;
+                    } else {
+                        // Initialize with default content if no data exists
+                        initializeDefaultContent();
+                    }
+                    hideLoading();
+                })
+                .catch((error) => {
+                    console.error('Error loading content:', error);
+                    hideLoading();
+                    // Fallback to localStorage if Firebase fails
+                    loadContentFromLocalStorage();
+                });
         }
 
-        function saveContent() {
+        // Initialize default content
+        function initializeDefaultContent() {
+            contentStorage = {
+                // Exams
+                'exam-prisyaga': '# Іспит | Присяга\n\n## Тестові посилання:\n\n1. [Google Docs з повним URL](https://docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)\n\n2. [Google Docs без https](docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)\n\n3. [Звичайний Google](https://www.google.com)\n\n## Ваше посилання:\nСценарії в [Google Docs](https://docs.google.com/document/d/1JjF-zAGY2vZZ3pZRI09f174kliGl_hiJzIhwt1Nit-c/edit?usp=sharing)',
+                'exam-stroyoviy': '# Іспит | Стройовий статут\n\n*Текст ще не додано*\n\n## Корисні посилання:\n[Посилання 1](https://example.com)\n[Посилання 2](https://example.org)',
+                'exam-vnutrishniy': '# Іспит | Внутрішній статут\n\n*Текст ще не додано*',
+                'exam-ten-kody': '# Іспит | Тен/коди та коди\n\n*Текст ще не додано*',
+                'exam-zony-fz': '# Іспит | Існуючи зони ФЗ\n\n*Текст ще не додано*',
+                'exam-dystsyplinarniy': '# Іспит | Дисциплінарний статут\n\n*Текст ще не додано*',
+                'exam-subordynatsiya': '# Іспит | Субординація\n\n*Текст ще не додано*',
+                
+                // Lectures
+                'lecture-stroyoviy': '# Лекція | Стройовий статут\n\n*Текст ще не додано*',
+                'lecture-vnutrishniy': '# Лекція | Внутрішній статут\n\n*Текст ще не додано*',
+                'lecture-ten-kody': '# Лекція | Тен/коди та коди\n\n*Текст ще не додано*',
+                'lecture-zony-fz': '# Лекція | Існуючи зони ФЗ\n\n*Текст ще не додано*',
+                'lecture-dystsyplinarniy': '# Лекція | Дисциплінарний Статут\n\n*Текст ще не додано*',
+                
+                // Training
+                'training-physical': '# Тренування | Фізична підготовка\n\n*Текст ще не додано*',
+                'training-tactical': '# Тренування | Тактичне тренування\n\n*Текст ще не додано*',
+                'training-medical': '# Тренування | Медична підготовка\n\n*Текст ще не додано*',
+                'training-survival': '# Тренування | Збір та розбирання зброї\n\n*Текст ще не додано*',
+                
+                // Tasks
+                'task-cleaning-akpp': '# Прибирання на АКПП-1\\2\n\n*Текст ще не додано*',
+                'task-cleaning-towers': '# Прибирання на вежах\n\n*Текст ще не додано*',
+                'task-oil-change': '# Заміна масла у автомобіля\n\n*Текст ще не додано*',
+                'task-car-cleaning': '# Чистка автомобіля\n\n*Текст ще не додано*',
+                'task-weapon-assembly': '# Зборка та розборка зброї\n\n*Текст ще не додано*',
+                'task-weapon-cleaning': '# Чистка зброї\n\n*Текст ще не додано*'
+            };
+            
+            // Save default content to Firebase
+            saveContentToFirebase();
+        }
+
+        // Save content to Firebase
+        function saveContentToFirebase() {
+            database.ref('content').set(contentStorage)
+                .then(() => {
+                    console.log('Content saved to Firebase');
+                })
+                .catch((error) => {
+                    console.error('Error saving content:', error);
+                    // Fallback to localStorage
+                    saveContentToLocalStorage();
+                });
+        }
+
+        // Listen for content changes in real-time
+        function initContentListeners() {
+            database.ref('content').on('value', (snapshot) => {
+                const content = snapshot.val();
+                if (content) {
+                    contentStorage = content;
+                    // Update current page if content changed
+                    updateCurrentPageContent();
+                }
+            });
+        }
+
+        // Update current page content if it's a content page
+        function updateCurrentPageContent() {
+            const contentPages = document.getElementById('content-pages');
+            if (contentPages.innerHTML) {
+                const activeContent = contentPages.querySelector('.page.active');
+                if (activeContent) {
+                    const contentId = Object.keys(contentStorage).find(id => 
+                        activeContent.innerHTML.includes(`content-${id}`)
+                    );
+                    if (contentId) {
+                        showContentPage(contentId, getPageTitle(contentId));
+                    }
+                }
+            }
+        }
+
+        // Get page title from content ID
+        function getPageTitle(contentId) {
+            const titles = {
+                'exam-prisyaga': 'Іспит | Присяга',
+                'exam-stroyoviy': 'Іспит | Стройовий статут',
+                'exam-vnutrishniy': 'Іспит | Внутрішній статут',
+                'exam-ten-kody': 'Іспит | Тен/коди та коди',
+                'exam-zony-fz': 'Іспит | Існуючи зони ФЗ',
+                'exam-dystsyplinarniy': 'Іспит | Дисциплінарний статут',
+                'exam-subordynatsiya': 'Іспит | Субординація',
+                'lecture-stroyoviy': 'Лекція | Стройовий статут',
+                'lecture-vnutrishniy': 'Лекція | Внутрішній статут',
+                'lecture-ten-kody': 'Лекція | Тен/коди та коди',
+                'lecture-zony-fz': 'Лекція | Існуючи зони ФЗ',
+                'lecture-dystsyplinarniy': 'Лекція | Дисциплінарний Статут',
+                'training-physical': 'Тренування | Фізична підготовка',
+                'training-tactical': 'Тренування | Тактичне тренування',
+                'training-medical': 'Тренування | Медична підготовка',
+                'training-survival': 'Тренування | Збір та розбирання зброї',
+                'task-cleaning-akpp': 'Прибирання на АКПП',
+                'task-cleaning-towers': 'Прибирання на вежах',
+                'task-oil-change': 'Заміна масла',
+                'task-car-cleaning': 'Чистка автомобіля',
+                'task-weapon-assembly': 'Зборка зброї',
+                'task-weapon-cleaning': 'Чистка зброї'
+            };
+            return titles[contentId] || 'Сторінка';
+        }
+
+        // Fallback functions for localStorage
+        function loadContentFromLocalStorage() {
+            const savedContent = localStorage.getItem('military-academy-content');
+            if (savedContent) {
+                contentStorage = JSON.parse(savedContent);
+            } else {
+                initializeDefaultContent();
+            }
+        }
+
+        function saveContentToLocalStorage() {
             localStorage.setItem('military-academy-content', JSON.stringify(contentStorage));
+        }
+
+        // Loading functions
+        function showLoading(message) {
+            const contentPages = document.getElementById('content-pages');
+            contentPages.innerHTML = `
+                <div class="page active">
+                    <div class="content-page" style="text-align: center;">
+                        <div class="spinner"></div>
+                        <div class="loading-text">${message}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function hideLoading() {
+            // Loading will be hidden when content is rendered
         }
 
         // Auth functions
@@ -1141,24 +1300,31 @@
                 return;
             }
 
-            if (users[username] && users[username].password === password && users[username].isAdmin) {
-                currentUser = {
-                    username: username,
-                    isAdmin: true
-                };
-                showMessage(message, 'Успішний вхід!', 'success');
-                setTimeout(() => {
-                    document.querySelector('.auth-modal').classList.remove('active');
-                    updateUserPanel();
-                }, 1000);
-            } else {
-                showMessage(message, 'Невірний логін або пароль', 'error');
-            }
+            // Firebase authentication
+            const email = `${username}@military-academy.com`;
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    showMessage(message, 'Успішний вхід!', 'success');
+                    setTimeout(() => {
+                        document.querySelector('.auth-modal').classList.remove('active');
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.error('Login error:', error);
+                    showMessage(message, 'Невірний логін або пароль', 'error');
+                });
         }
 
         function logout() {
-            currentUser = null;
-            updateUserPanel();
+            auth.signOut()
+                .then(() => {
+                    currentUser = null;
+                    updateUserPanel();
+                })
+                .catch((error) => {
+                    console.error('Logout error:', error);
+                });
         }
 
         function showMessage(element, text, type) {
@@ -1192,7 +1358,6 @@
             
             document.querySelector('.admin-overlay').classList.add('active');
             document.querySelector('.admin-panel').classList.add('active');
-            updateUsersList();
         }
 
         function closeAdminPanel() {
@@ -1209,55 +1374,19 @@
                 return;
             }
 
-            if (users[username]) {
-                alert('Користувач вже існує');
-                return;
-            }
-
-            users[username] = {
-                password: password,
-                isAdmin: true
-            };
-            saveUsers();
-            updateUsersList();
-
-            // Clear form
-            document.getElementById('new-username').value = '';
-            document.getElementById('new-password').value = '';
-
-            alert(`Адміністратор ${username} успішно доданий`);
-        }
-
-        function deleteUser(username) {
-            if (username === 'admin') {
-                alert('Не можна видалити головного адміністратора');
-                return;
-            }
-
-            if (confirm(`Видалити адміністратора ${username}?`)) {
-                delete users[username];
-                saveUsers();
-                updateUsersList();
-            }
-        }
-
-        function updateUsersList() {
-            const usersList = document.getElementById('users-list');
-            usersList.innerHTML = '';
-
-            Object.keys(users).forEach(username => {
-                if (users[username].isAdmin) {
-                    const userItem = document.createElement('div');
-                    userItem.className = 'user-item';
-                    userItem.innerHTML = `
-                        <span>${username} (Адмін)</span>
-                        <div class="user-actions">
-                            ${username !== 'admin' ? `<button class="delete-user" onclick="deleteUser('${username}')">Видалити</button>` : ''}
-                        </div>
-                    `;
-                    usersList.appendChild(userItem);
-                }
-            });
+            const email = `${username}@military-academy.com`;
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert(`Адміністратор ${username} успішно доданий`);
+                    // Clear form
+                    document.getElementById('new-username').value = '';
+                    document.getElementById('new-password').value = '';
+                })
+                .catch((error) => {
+                    console.error('Error creating user:', error);
+                    alert('Помилка при створенні користувача: ' + error.message);
+                });
         }
 
         // Sidebar toggle
@@ -1318,12 +1447,12 @@
                             <h2>${title}</h2>
                         </div>
                         <div class="content-body" id="content-${contentId}">
-                            ${renderMarkdown(contentStorage[contentId])}
+                            ${renderMarkdown(contentStorage[contentId] || '# Контент ще не додано')}
                         </div>
                         ${canEdit ? `
                         <div class="edit-section">
                             <h4>Редагувати контент:</h4>
-                            <textarea class="edit-textarea" id="edit-${contentId}">${contentStorage[contentId]}</textarea>
+                            <textarea class="edit-textarea" id="edit-${contentId}">${contentStorage[contentId] || ''}</textarea>
                             <button class="edit-button" onclick="saveContentItem('${contentId}')">Зберегти зміни</button>
                             <p><small>Використовуйте Markdown для форматування тексту</small></p>
                         </div>
@@ -1348,8 +1477,11 @@
             contentStorage[contentId] = textarea.value;
             const contentElement = document.getElementById(`content-${contentId}`);
             contentElement.innerHTML = renderMarkdown(contentStorage[contentId]);
-            saveContent();
-            alert('Зміни збережено!');
+            
+            // Save to Firebase
+            saveContentToFirebase();
+            
+            alert('Зміни збережено! Всі користувачі побачать оновлення.');
         }
 
         function getParentPage(contentId) {
@@ -1424,17 +1556,12 @@
             html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
             html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
             
-            // Links - полностью переписанная логика
+            // Links
             html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, function(match, linkText, linkUrl) {
-                // Убеждаемся, что URL корректен
                 let finalUrl = linkUrl.trim();
-                
-                // Проверяем, начинается ли URL с протокола
                 if (!finalUrl.match(/^[a-zA-Z]+:\/\//)) {
                     finalUrl = 'https://' + finalUrl;
                 }
-                
-                console.log('Converting link:', linkText, '->', finalUrl);
                 return '<a href="' + finalUrl + '" target="_blank" rel="noopener noreferrer" style="color: #4A90E2 !important; text-decoration: none !important; border-bottom: 1px solid #4A90E2; cursor: pointer !important;">' + linkText + '</a>';
             });
             
@@ -1458,11 +1585,9 @@
         // Обработчик для ссылок в контенте
         function initContentLinks() {
             document.addEventListener('click', function(e) {
-                // Если клик по ссылке в контенте
                 if (e.target.matches('.content-body a')) {
                     e.preventDefault();
                     const url = e.target.href;
-                    console.log('Opening link:', url);
                     window.open(url, '_blank', 'noopener,noreferrer');
                 }
             });
@@ -1506,10 +1631,19 @@
         // Initialize
         initializeData();
 
-        // Default credentials info
-        console.log('Default admin credentials:');
-        console.log('Username: admin');
-        console.log('Password: admin123');
+        // Instructions for setup
+        console.log(`
+        ===== INSTRUCTIONS FOR SETUP =====
+        
+        1. Go to https://console.firebase.google.com
+        2. Create a new project
+        3. Enable Authentication (Email/Password)
+        4. Enable Realtime Database
+        5. Copy your Firebase config and replace the firebaseConfig object
+        6. Create the first admin user manually in Firebase Console
+        
+        Default admin credentials will be created in Firebase Authentication.
+        `);
     </script>
 </body>
 </html>
