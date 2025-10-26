@@ -1307,7 +1307,7 @@
                     }
                     updateAllPages();
                     hideLoading();
-                    isInitialLoad = false; // Устанавливаем флаг, что начальная загрузка завершена
+                    isInitialLoad = false;
                 })
                 .catch((error) => {
                     console.error('Error loading content:', error);
@@ -1524,7 +1524,7 @@
                 });
         }
 
-        // Listen for content changes in real-time - ИСПРАВЛЕННАЯ ФУНКЦИЯ
+        // Listen for content changes in real-time
         function initContentListeners() {
             database.ref('content').on('value', (snapshot) => {
                 // Игнорируем обновления, если это начальная загрузка
@@ -1628,7 +1628,12 @@
         }
 
         function hideLoading() {
-            // Loading will be hidden when content is rendered
+            const contentPages = document.getElementById('content-pages');
+            // Проверяем, есть ли активный спиннер загрузки
+            const loadingSpinner = contentPages.querySelector('.spinner');
+            if (loadingSpinner) {
+                contentPages.innerHTML = ''; // Очищаем контент страниц
+            }
         }
 
         // Auth functions
