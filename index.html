@@ -939,7 +939,16 @@
             <div class="form-group">
                 <label>ID картки (унікальний ідентифікатор):</label>
                 <input type="text" id="new-card-id" placeholder="наприклад: new-topic">
-                <small style="color: var(--text-gray);">Буде автоматично додано префікс розділу</small>
+                <div style="background: rgba(26, 31, 46, 0.6); padding: 10px; border-radius: 6px; margin-top: 8px; border-left: 3px solid #4A90E2;">
+                    <small style="color: var(--text-gray); line-height: 1.4; display: block;">
+                        <strong>📋 Правила створення ID:</strong><br>
+                        • Має бути унікальним в межах розділу<br>
+                        • Не можна змінити після створення<br>
+                        • Використовується для посилань та навігації<br>
+                        • <strong>Тільки латинські літери, цифри та дефіси</strong><br>
+                        • Наприклад: <code>new-topic</code>, <code>weapon-training</code>, <code>advanced-tactics</code>
+                    </small>
+                </div>
             </div>
             <div class="form-group">
                 <label>Назва картки:</label>
