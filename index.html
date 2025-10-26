@@ -1086,7 +1086,7 @@
                 </button>
             </div>
             <div class="chapters-grid" id="exams-grid">
-                <!-- Карточки іспитів будут здесь -->
+                <!-- Карточки иcпитов будут здесь -->
             </div>
         </div>
 
@@ -1163,6 +1163,7 @@
         let contentStorage = {};
         let systemLogs = [];
         let currentCardType = '';
+        let isInitialLoad = true; // Флаг для отслеживания начальной загрузки
 
         // Initialize data
         function initializeData() {
@@ -1306,12 +1307,14 @@
                     }
                     updateAllPages();
                     hideLoading();
+                    isInitialLoad = false; // Устанавливаем флаг, что начальная загрузка завершена
                 })
                 .catch((error) => {
                     console.error('Error loading content:', error);
                     hideLoading();
                     // Fallback to localStorage if Firebase fails
                     loadContentFromLocalStorage();
+                    isInitialLoad = false;
                 });
         }
 
@@ -1521,15 +1524,21 @@
                 });
         }
 
-        // Listen for content changes in real-time
+        // Listen for content changes in real-time - ИСПРАВЛЕННАЯ ФУНКЦИЯ
         function initContentListeners() {
             database.ref('content').on('value', (snapshot) => {
+                // Игнорируем обновления, если это начальная загрузка
+                if (isInitialLoad) return;
+                
                 const content = snapshot.val();
                 if (content) {
-                    contentStorage = content;
-                    // Update current page if content changed
-                    updateCurrentPageContent();
-                    updateAllPages();
+                    // Проверяем, действительно ли данные изменились
+                    if (JSON.stringify(content) !== JSON.stringify(contentStorage)) {
+                        contentStorage = content;
+                        // Update current page if content changed
+                        updateCurrentPageContent();
+                        updateAllPages();
+                    }
                 }
             });
         }
@@ -1655,7 +1664,9 @@
 
         function logout() {
             // Add logout log
-            addSystemLog('user_logout', `Користувач ${currentUser.username} вийшов з системи`);
+            if (currentUser) {
+                addSystemLog('user_logout', `Користувач ${currentUser.username} вийшов з системи`);
+            }
             
             auth.signOut()
                 .then(() => {
@@ -1956,6 +1967,7 @@
         Firebase: ${firebaseConfig.projectId}
         Card management: ACTIVE
         Logging system: ACTIVE
+        Fixed infinite loading issue
         Ready for use!
         `);
     </script>
