@@ -24,6 +24,7 @@
             --error: #f44336;
             --link-color: #4A90E2;
             --link-hover: #5A9AF2;
+            --warning: #ff9800;
         }
         
         * {
@@ -99,32 +100,6 @@
             width: 90%;
             max-width: 400px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
-        
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .auth-tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-        }
-        
-        .auth-tab.active {
-            border-bottom: 2px solid #4A90E2;
-        }
-        
-        .auth-form {
-            display: none;
-        }
-        
-        .auth-form.active {
-            display: block;
         }
         
         .form-group {
@@ -244,7 +219,7 @@
             border-radius: 12px;
             padding: 30px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             z-index: 2001;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
@@ -269,39 +244,143 @@
             display: block;
         }
         
-        .users-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin: 20px 0;
+        .users-info {
             background: rgba(26, 31, 46, 0.6);
             border-radius: 6px;
-            padding: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #4A90E2;
         }
         
-        .user-item {
+        .users-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        /* Стили для системы логов */
+        .logs-section {
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .logs-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(34, 40, 60, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .log-item {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: rgba(45, 52, 72, 0.8);
+            border-radius: 6px;
+            border-left: 4px solid #4A90E2;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        
+        .log-item:hover {
+            background: rgba(45, 52, 72, 0.9);
+            transform: translateX(2px);
+        }
+        
+        .log-time {
+            color: var(--text-gray);
+            font-size: 11px;
+            margin-right: 10px;
+        }
+        
+        .log-user {
+            color: #4A90E2;
+            font-weight: bold;
+        }
+        
+        /* Кнопки управления карточками */
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
-        .user-item:last-child {
-            border-bottom: none;
-        }
-        
-        .user-actions button {
-            margin-left: 5px;
-            padding: 5px 10px;
+        .add-card-btn {
+            background: var(--primary);
+            color: var(--text);
             border: none;
-            border-radius: 4px;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .delete-user {
+        .add-card-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .delete-card-btn {
             background: var(--error);
             color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .chapter-card:hover .delete-card-btn {
+            opacity: 1;
+        }
+        
+        /* Модальное окно создания карточки */
+        .card-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-modal-content {
+            background: var(--card-gradient);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
         
         /* Sidebar Styles */
@@ -554,6 +633,7 @@
             text-align: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
+            position: relative;
         }
         
         .chapter-card:hover {
@@ -798,6 +878,11 @@
                 margin-bottom: 20px;
                 justify-content: center;
             }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
         
         /* Loading Spinner */
@@ -846,10 +931,39 @@
         </div>
     </div>
 
+    <!-- Card Creation Modal -->
+    <div class="card-modal">
+        <div class="card-modal-content">
+            <h3 style="text-align: center; margin-bottom: 20px;" id="card-modal-title">Створити нову картку</h3>
+            
+            <div class="form-group">
+                <label>ID картки (унікальний ідентифікатор):</label>
+                <input type="text" id="new-card-id" placeholder="наприклад: new-topic">
+                <small style="color: var(--text-gray);">Буде автоматично додано префікс розділу</small>
+            </div>
+            <div class="form-group">
+                <label>Назва картки:</label>
+                <input type="text" id="new-card-title" placeholder="наприклад: Нова тема">
+            </div>
+            <div class="form-group">
+                <label>Початковий контент:</label>
+                <textarea class="edit-textarea" id="new-card-content" placeholder="Опишіть тему..." style="height: 200px;"># Нова тема\n\nТекст ще не додано</textarea>
+            </div>
+            
+            <button class="auth-button" onclick="createNewCard()">Створити картку</button>
+            <button class="auth-button" onclick="closeCardModal()" style="background: var(--error); margin-top: 10px;">Скасувати</button>
+        </div>
+    </div>
+
     <!-- Admin Panel -->
     <div class="admin-overlay"></div>
     <div class="admin-panel">
         <h3>Панель адміністратора</h3>
+        
+        <div class="users-info">
+            <p><strong>Поточний адмін:</strong> <span id="current-admin">admin</span></p>
+        </div>
+
         <div class="form-group">
             <label>Додати нового адміністратора:</label>
             <input type="text" id="new-username" placeholder="Логін нового адміністратора">
@@ -857,9 +971,11 @@
             <button class="auth-button" onclick="addUser()" style="margin-top: 10px;">Додати адміністратора</button>
         </div>
         
-        <h4>Список адміністраторів:</h4>
-        <div class="users-list" id="users-list">
-            <!-- Users will be listed here -->
+        <div class="logs-section">
+            <h4>Останні дії в системі:</h4>
+            <div class="logs-list" id="logs-list">
+                <!-- Логи будут здесь -->
+            </div>
         </div>
         
         <button class="auth-button" onclick="closeAdminPanel()">Закрити</button>
@@ -887,13 +1003,7 @@
                     <span class="nav-icon">⚡</span>Іспити
                 </a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showContentPage('exam-prisyaga', 'Іспит | Присяга')">Іспит | Присяга</a>
-                    <a href="#" onclick="showContentPage('exam-stroyoviy', 'Іспит | Стройовий статут')">Стройовий статут</a>
-                    <a href="#" onclick="showContentPage('exam-vnutrishniy', 'Іспит | Внутрішній статут')">Внутрішній статут</a>
-                    <a href="#" onclick="showContentPage('exam-ten-kody', 'Іспит | Тен/коди та коди')">Тен/коди та коди</a>
-                    <a href="#" onclick="showContentPage('exam-zony-fz', 'Іспит | Існуючи зони ФЗ')">Існуючи зони ФЗ</a>
-                    <a href="#" onclick="showContentPage('exam-dystsyplinarniy', 'Іспит | Дисциплінарний статут')">Дисциплінарний статут</a>
-                    <a href="#" onclick="showContentPage('exam-subordynatsiya', 'Іспит | Субординація')">Субординація</a>
+                    <!-- Динамически заполняется -->
                 </div>
             </li>
             <li class="dropdown">
@@ -901,11 +1011,7 @@
                     <span class="nav-icon">📚</span>Лекції
                 </a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showContentPage('lecture-stroyoviy', 'Лекція | Стройовий статут')">Стройовий статут</a>
-                    <a href="#" onclick="showContentPage('lecture-vnutrishniy', 'Лекція | Внутрішній статут')">Внутрішній статут</a>
-                    <a href="#" onclick="showContentPage('lecture-ten-kody', 'Лекція | Тен/коди та коди')">Тен/коди та коди</a>
-                    <a href="#" onclick="showContentPage('lecture-zony-fz', 'Лекція | Існуючи зони ФЗ')">Існуючи зони ФЗ</a>
-                    <a href="#" onclick="showContentPage('lecture-dystsyplinarniy', 'Лекція | Дисциплінарний Статут')">Дисциплінарний Статут</a>
+                    <!-- Динамически заполняется -->
                 </div>
             </li>
             <li class="dropdown">
@@ -913,10 +1019,7 @@
                     <span class="nav-icon">💪</span>Тренування
                 </a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showContentPage('training-physical', 'Тренування | Фізична підготовка')">Фізична підготовка</a>
-                    <a href="#" onclick="showContentPage('training-tactical', 'Тренування | Тактичне тренування')">Тактичне тренування</a>
-                    <a href="#" onclick="showContentPage('training-medical', 'Тренування | Медична підготовка')">Медична підготовка</a>
-                    <a href="#" onclick="showContentPage('training-survival', 'Тренування | Навики виживання')">Збір та розбирання зброї </a>
+                    <!-- Динамически заполняется -->
                 </div>
             </li>
             <li class="dropdown">
@@ -924,12 +1027,7 @@
                     <span class="nav-icon">🎯</span>РП Завдання
                 </a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showContentPage('task-cleaning-akpp', 'Прибирання на АКПП')">Прибирання на АКПП</a>
-                    <a href="#" onclick="showContentPage('task-cleaning-towers', 'Прибирання на вежах')">Прибирання на вежах</a>
-                    <a href="#" onclick="showContentPage('task-oil-change', 'Заміна масла')">Заміна масла</a>
-                    <a href="#" onclick="showContentPage('task-car-cleaning', 'Чистка автомобіля')">Чистка автомобіля</a>
-                    <a href="#" onclick="showContentPage('task-weapon-assembly', 'Зборка зброї')">Зборка зброї</a>
-                    <a href="#" onclick="showContentPage('task-weapon-cleaning', 'Чистка зброї')">Чистка зброї</a>
+                    <!-- Динамически заполняется -->
                 </div>
             </li>
         </ul>
@@ -972,98 +1070,56 @@
         <!-- Exams Page -->
         <div id="exams" class="page">
             <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
-            <h2>Іспити</h2>
-            <div class="chapters-grid">
-                <div class="chapter-card" onclick="showContentPage('exam-prisyaga', 'Іспит | Присяга')">
-                    <h4>Іспит | Присяга</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('exam-stroyoviy', 'Іспит | Стройовий статут')">
-                    <h4>Іспит | Стройовий статут</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('exam-vnutrishniy', 'Іспит | Внутрішній статут')">
-                    <h4>Іспит | Внутрішній статут</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('exam-ten-kody', 'Іспит | Тен/коди та коди')">
-                    <h4>Іспит | Тен/коди та коди</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('exam-zony-fz', 'Іспит | Існуючи зони ФЗ')">
-                    <h4>Іспит | Існуючи зони ФЗ</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('exam-dystsyplinarniy', 'Іспит | Дисциплінарний статут')">
-                    <h4>Іспит | Дисциплінарний статут</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('exam-subordynatsiya', 'Іспит | Субординація')">
-                    <h4>Іспит | Субординація</h4>
-                </div>
+            <div class="section-header">
+                <h2>Іспити</h2>
+                <button class="add-card-btn" onclick="showCardModal('exam')">
+                    ➕ Додати іспит
+                </button>
+            </div>
+            <div class="chapters-grid" id="exams-grid">
+                <!-- Карточки іспитів будут здесь -->
             </div>
         </div>
 
         <!-- Lectures Page -->
         <div id="lectures" class="page">
             <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
-            <h2>Лекції</h2>
-            <div class="chapters-grid">
-                <div class="chapter-card" onclick="showContentPage('lecture-stroyoviy', 'Лекція | Стройовий статут')">
-                    <h4>Лекція | Стройовий статут</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('lecture-vnutrishniy', 'Лекція | Внутрішній статут')">
-                    <h4>Лекція | Внутрішній статут</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('lecture-ten-kody', 'Лекція | Тен/коди та коди')">
-                    <h4>Лекція | Тен/коди та коди</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('lecture-zony-fz', 'Лекція | Існуючи зони ФЗ')">
-                    <h4>Лекція | Існуючи зони ФЗ</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('lecture-dystsyplinarniy', 'Лекція | Дисциплінарний Статут')">
-                    <h4>Лекція | Дисциплінарний Статут</h4>
-                </div>
+            <div class="section-header">
+                <h2>Лекції</h2>
+                <button class="add-card-btn" onclick="showCardModal('lecture')">
+                    ➕ Додати лекцію
+                </button>
+            </div>
+            <div class="chapters-grid" id="lectures-grid">
+                <!-- Карточки лекций будут здесь -->
             </div>
         </div>
 
         <!-- Training Page -->
         <div id="training" class="page">
             <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
-            <h2>Тренування</h2>
-            <div class="chapters-grid">
-                <div class="chapter-card" onclick="showContentPage('training-physical', 'Тренування | Фізична підготовка')">
-                    <h4>Тренування | Фізична підготовка</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('training-tactical', 'Тренування | Тактичне тренування')">
-                    <h4>Тренування | Тактичне тренування</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('training-medical', 'Тренування | Медична підготовка')">
-                    <h4>Тренування | Медична підготовка</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('training-survival', 'Тренування | Збір та розбирання зброї')">
-                    <h4>Тренування | Збір та розбирання зброї</h4>
-                </div>
+            <div class="section-header">
+                <h2>Тренування</h2>
+                <button class="add-card-btn" onclick="showCardModal('training')">
+                    ➕ Додати тренування
+                </button>
+            </div>
+            <div class="chapters-grid" id="training-grid">
+                <!-- Карточки тренировок будут здесь -->
             </div>
         </div>
 
         <!-- Tasks Page -->
         <div id="tasks" class="page">
             <button class="back-button" onclick="showPage('home')">← Назад до головної</button>
-            <h2>РП Завдання</h2>
-            <div class="chapters-grid">
-                <div class="chapter-card" onclick="showContentPage('task-cleaning-akpp', 'Прибирання на АКПП')">
-                    <h4>Прибирання на АКПП</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('task-cleaning-towers', 'Прибирання на вежах')">
-                    <h4>Прибирання на вежах</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('task-oil-change', 'Заміна масла')">
-                    <h4>Заміна масла</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('task-car-cleaning', 'Чистка автомобіля')">
-                    <h4>Чистка автомобіля</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('task-weapon-assembly', 'Зборка зброї')">
-                    <h4>Зборка зброї</h4>
-                </div>
-                <div class="chapter-card" onclick="showContentPage('task-weapon-cleaning', 'Чистка зброї')">
-                    <h4>Чистка зброї</h4>
-                </div>
+            <div class="section-header">
+                <h2>РП Завдання</h2>
+                <button class="add-card-btn" onclick="showCardModal('task')">
+                    ➕ Додати завдання
+                </button>
+            </div>
+            <div class="chapters-grid" id="tasks-grid">
+                <!-- Карточки заданий будут здесь -->
             </div>
         </div>
 
@@ -1079,14 +1135,14 @@
     <script>
         // Firebase configuration
         const firebaseConfig = {
-    apiKey: "AIzaSyBJU9vxpn6bMQrCIzu4ixuYNAg_TjReNCY",
-    authDomain: "us-army-ukraine-gta5.firebaseapp.com",
-    databaseURL: "https://us-army-ukraine-gta5-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "us-army-ukraine-gta5",
-    storageBucket: "us-army-ukraine-gta5.firebasestorage.app",
-    messagingSenderId: "544783269993",
-    appId: "1:544783269993:web:55377448115351af7680c"
-};
+            apiKey: "AIzaSyBJU9vxpn6bMQrCIzu4ixuYNAg_TjReNCY",
+            authDomain: "us-army-ukraine-gta5.firebaseapp.com",
+            databaseURL: "https://us-army-ukraine-gta5-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "us-army-ukraine-gta5",
+            storageBucket: "us-army-ukraine-gta5.firebasestorage.app",
+            messagingSenderId: "544783269993",
+            appId: "1:544783269993:web:55377448115351af7680c"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -1096,6 +1152,8 @@
         // User management system
         let currentUser = null;
         let contentStorage = {};
+        let systemLogs = [];
+        let currentCardType = '';
 
         // Initialize data
         function initializeData() {
@@ -1109,6 +1167,10 @@
                     };
                     updateUserPanel();
                     loadContentFromFirebase();
+                    loadLogsFromFirebase();
+                    
+                    // Add login log
+                    addSystemLog('user_login', `Користувач ${currentUser.username} увійшов в систему`);
                 } else {
                     currentUser = null;
                     updateUserPanel();
@@ -1118,9 +1180,106 @@
 
             // Initialize content listeners
             initContentListeners();
+            initLogsListeners();
             
             // Initialize content links
             initContentLinks();
+        }
+
+        // Add system log
+        function addSystemLog(action, details = '') {
+            if (!currentUser) return;
+            
+            const logEntry = {
+                timestamp: new Date().toISOString(),
+                user: currentUser.username,
+                userId: currentUser.uid,
+                action: action,
+                details: details
+            };
+            
+            console.log('System log:', logEntry);
+            
+            // Save to Firebase
+            database.ref('logs').push(logEntry)
+                .then(() => {
+                    console.log('Log saved to Firebase');
+                })
+                .catch((error) => {
+                    console.error('Error saving log:', error);
+                });
+        }
+
+        // Load logs from Firebase
+        function loadLogsFromFirebase() {
+            database.ref('logs').orderByChild('timestamp').limitToLast(20).once('value')
+                .then((snapshot) => {
+                    const logs = [];
+                    snapshot.forEach((childSnapshot) => {
+                        logs.push(childSnapshot.val());
+                    });
+                    // Reverse to show latest first
+                    systemLogs = logs.reverse();
+                    updateLogsDisplay();
+                })
+                .catch((error) => {
+                    console.error('Error loading logs:', error);
+                });
+        }
+
+        // Listen for new logs
+        function initLogsListeners() {
+            database.ref('logs').limitToLast(1).on('child_added', (snapshot) => {
+                const newLog = snapshot.val();
+                systemLogs.unshift(newLog);
+                // Keep only last 20 logs
+                if (systemLogs.length > 20) {
+                    systemLogs.pop();
+                }
+                updateLogsDisplay();
+            });
+        }
+
+        // Update logs display
+        function updateLogsDisplay() {
+            const logsList = document.getElementById('logs-list');
+            if (!logsList) return;
+            
+            logsList.innerHTML = '';
+            
+            systemLogs.forEach(log => {
+                const logItem = document.createElement('div');
+                logItem.className = 'log-item';
+                
+                const time = new Date(log.timestamp).toLocaleString('uk-UA');
+                const actionText = getActionText(log.action);
+                
+                logItem.innerHTML = `
+                    <div>
+                        <span class="log-time">${time}</span>
+                        <span class="log-user">${log.user}</span>
+                        <span>${actionText}</span>
+                        ${log.details ? `<br><small>${log.details}</small>` : ''}
+                    </div>
+                `;
+                
+                logsList.appendChild(logItem);
+            });
+        }
+
+        // Get readable action text
+        function getActionText(action) {
+            const actions = {
+                'user_login': 'увійшов в систему',
+                'user_logout': 'вийшов з системи',
+                'content_edit': 'відредагував контент',
+                'user_created': 'створив нового користувача',
+                'content_saved': 'зберегли зміни в контенті',
+                'card_created': 'створив нову картку',
+                'card_deleted': 'видалив картку'
+            };
+            
+            return actions[action] || action;
         }
 
         // Load content from Firebase
@@ -1136,6 +1295,7 @@
                         // Initialize with default content if no data exists
                         initializeDefaultContent();
                     }
+                    updateAllPages();
                     hideLoading();
                 })
                 .catch((error) => {
@@ -1144,6 +1304,161 @@
                     // Fallback to localStorage if Firebase fails
                     loadContentFromLocalStorage();
                 });
+        }
+
+        // Update all pages with current content
+        function updateAllPages() {
+            updatePage('exams', 'exam');
+            updatePage('lectures', 'lecture');
+            updatePage('training', 'training');
+            updatePage('tasks', 'task');
+            updateSidebarDropdowns();
+        }
+
+        // Update specific page with cards
+        function updatePage(pageId, prefix) {
+            const grid = document.getElementById(`${pageId}-grid`);
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            // Get all cards for this page
+            const pageCards = Object.keys(contentStorage)
+                .filter(key => key.startsWith(prefix))
+                .sort();
+            
+            pageCards.forEach(cardId => {
+                const cardTitle = getPageTitle(cardId);
+                const cardElement = document.createElement('div');
+                cardElement.className = 'chapter-card';
+                cardElement.innerHTML = `
+                    <h4>${cardTitle}</h4>
+                    ${currentUser ? `<button class="delete-card-btn" onclick="deleteCard('${cardId}', event)">🗑️ Видалити</button>` : ''}
+                `;
+                cardElement.onclick = () => showContentPage(cardId, cardTitle);
+                grid.appendChild(cardElement);
+            });
+        }
+
+        // Update sidebar dropdowns
+        function updateSidebarDropdowns() {
+            const sections = {
+                'exams': 'exam',
+                'lectures': 'lecture', 
+                'training': 'training',
+                'tasks': 'task'
+            };
+            
+            Object.keys(sections).forEach(section => {
+                const dropdown = document.querySelector(`[data-page="${section}"] + .dropdown-content`);
+                if (dropdown) {
+                    dropdown.innerHTML = '';
+                    
+                    const sectionCards = Object.keys(contentStorage)
+                        .filter(key => key.startsWith(sections[section]))
+                        .sort();
+                    
+                    sectionCards.forEach(cardId => {
+                        const link = document.createElement('a');
+                        link.href = '#';
+                        link.textContent = getPageTitle(cardId);
+                        link.onclick = () => showContentPage(cardId, getPageTitle(cardId));
+                        dropdown.appendChild(link);
+                    });
+                }
+            });
+        }
+
+        // Show card creation modal
+        function showCardModal(cardType) {
+            if (!currentUser) {
+                alert('Будь ласка, увійдіть як адміністратор');
+                return;
+            }
+            
+            currentCardType = cardType;
+            const modalTitle = document.getElementById('card-modal-title');
+            const titles = {
+                'exam': 'Створити новий іспит',
+                'lecture': 'Створити нову лекцію',
+                'training': 'Створити нове тренування',
+                'task': 'Створити нове завдання'
+            };
+            
+            modalTitle.textContent = titles[cardType] || 'Створити нову картку';
+            document.getElementById('new-card-id').value = '';
+            document.getElementById('new-card-title').value = '';
+            document.getElementById('new-card-content').value = `# Нова ${titles[cardType].toLowerCase().replace('створити нов', '')}\n\nТекст ще не додано`;
+            
+            document.querySelector('.card-modal').classList.add('active');
+        }
+
+        // Close card modal
+        function closeCardModal() {
+            document.querySelector('.card-modal').classList.remove('active');
+        }
+
+        // Create new card
+        function createNewCard() {
+            if (!currentUser) return;
+            
+            const cardId = document.getElementById('new-card-id').value.trim();
+            const cardTitle = document.getElementById('new-card-title').value.trim();
+            const cardContent = document.getElementById('new-card-content').value.trim();
+            
+            if (!cardId || !cardTitle) {
+                alert('Будь ласка, заповніть ID та назву картки');
+                return;
+            }
+            
+            const fullCardId = `${currentCardType}-${cardId}`;
+            
+            if (contentStorage[fullCardId]) {
+                alert('Картка з таким ID вже існує! Будь ласка, виберіть інший ID.');
+                return;
+            }
+            
+            // Add new card to storage
+            contentStorage[fullCardId] = cardContent;
+            
+            // Save to Firebase
+            saveContentToFirebase();
+            
+            // Add system log
+            addSystemLog('card_created', `Створено картку: ${cardTitle} (${fullCardId})`);
+            
+            // Update UI
+            updateAllPages();
+            closeCardModal();
+            
+            alert(`Картка "${cardTitle}" успішно створена!`);
+        }
+
+        // Delete card
+        function deleteCard(cardId, event) {
+            if (!currentUser) return;
+            
+            event.stopPropagation();
+            
+            const cardTitle = getPageTitle(cardId);
+            
+            if (!confirm(`Ви впевнені, що хочете видалити картку "${cardTitle}"? Цю дію неможливо скасувати!`)) {
+                return;
+            }
+            
+            // Remove card from storage
+            delete contentStorage[cardId];
+            
+            // Save to Firebase
+            saveContentToFirebase();
+            
+            // Add system log
+            addSystemLog('card_deleted', `Видалено картку: ${cardTitle} (${cardId})`);
+            
+            // Update UI
+            updateAllPages();
+            
+            alert(`Картка "${cardTitle}" успішно видалена!`);
         }
 
         // Initialize default content
@@ -1205,6 +1520,7 @@
                     contentStorage = content;
                     // Update current page if content changed
                     updateCurrentPageContent();
+                    updateAllPages();
                 }
             });
         }
@@ -1227,6 +1543,16 @@
 
         // Get page title from content ID
         function getPageTitle(contentId) {
+            // Try to extract title from content
+            const content = contentStorage[contentId];
+            if (content) {
+                const titleMatch = content.match(/^#\s+(.+)$/m);
+                if (titleMatch) {
+                    return titleMatch[1];
+                }
+            }
+            
+            // Fallback to predefined titles
             const titles = {
                 'exam-prisyaga': 'Іспит | Присяга',
                 'exam-stroyoviy': 'Іспит | Стройовий статут',
@@ -1251,7 +1577,8 @@
                 'task-weapon-assembly': 'Зборка зброї',
                 'task-weapon-cleaning': 'Чистка зброї'
             };
-            return titles[contentId] || 'Сторінка';
+            
+            return titles[contentId] || contentId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
 
         // Fallback functions for localStorage
@@ -1259,6 +1586,7 @@
             const savedContent = localStorage.getItem('military-academy-content');
             if (savedContent) {
                 contentStorage = JSON.parse(savedContent);
+                updateAllPages();
             } else {
                 initializeDefaultContent();
             }
@@ -1317,6 +1645,9 @@
         }
 
         function logout() {
+            // Add logout log
+            addSystemLog('user_logout', `Користувач ${currentUser.username} вийшов з системи`);
+            
             auth.signOut()
                 .then(() => {
                     currentUser = null;
@@ -1379,6 +1710,10 @@
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     alert(`Адміністратор ${username} успішно доданий`);
+                    
+                    // Add system log
+                    addSystemLog('user_created', `Створено нового користувача: ${username}`);
+                    
                     // Clear form
                     document.getElementById('new-username').value = '';
                     document.getElementById('new-password').value = '';
@@ -1478,6 +1813,9 @@
             const contentElement = document.getElementById(`content-${contentId}`);
             contentElement.innerHTML = renderMarkdown(contentStorage[contentId]);
             
+            // Add edit log
+            addSystemLog('content_edit', `Відредаговано розділ: ${getPageTitle(contentId)}`);
+            
             // Save to Firebase
             saveContentToFirebase();
             
@@ -1493,45 +1831,13 @@
         }
 
         function getNavigationButtons(currentContentId, parentPage) {
-            const buttons = {
-                'exams': [
-                    {id: 'exam-prisyaga', title: 'Іспит | Присяга'},
-                    {id: 'exam-stroyoviy', title: 'Іспит | Стройовий статут'},
-                    {id: 'exam-vnutrishniy', title: 'Іспит | Внутрішній статут'},
-                    {id: 'exam-ten-kody', title: 'Іспит | Тен/коди та коди'},
-                    {id: 'exam-zony-fz', title: 'Іспит | Існуючи зони ФЗ'},
-                    {id: 'exam-dystsyplinarniy', title: 'Іспит | Дисциплінарний статут'},
-                    {id: 'exam-subordynatsiya', title: 'Іспит | Субординація'}
-                ],
-                'lectures': [
-                    {id: 'lecture-stroyoviy', title: 'Лекція | Стройовий статут'},
-                    {id: 'lecture-vnutrishniy', title: 'Лекція | Внутрішній статут'},
-                    {id: 'lecture-ten-kody', title: 'Лекція | Тен/коди та коди'},
-                    {id: 'lecture-zony-fz', title: 'Лекція | Існуючи зони ФЗ'},
-                    {id: 'lecture-dystsyplinarniy', title: 'Лекція | Дисциплінарний Статут'}
-                ],
-                'training': [
-                    {id: 'training-physical', title: 'Тренування | Фізична підготовка'},
-                    {id: 'training-tactical', title: 'Тренування | Тактичне тренування'},
-                    {id: 'training-medical', title: 'Тренування | Медична підготовка'},
-                    {id: 'training-survival', title: 'Тренування | Навики виживання'}
-                ],
-                'tasks': [
-                    {id: 'task-cleaning-akpp', title: 'Прибирання на АКПП'},
-                    {id: 'task-cleaning-towers', title: 'Прибирання на вежах'},
-                    {id: 'task-oil-change', title: 'Заміна масла'},
-                    {id: 'task-car-cleaning', title: 'Чистка автомобіля'},
-                    {id: 'task-weapon-assembly', title: 'Зборка зброї'},
-                    {id: 'task-weapon-cleaning', title: 'Чистка зброї'}
-                ]
-            };
-
-            const currentButtons = buttons[parentPage];
-            if (!currentButtons) return '';
-
-            const buttonHTML = currentButtons.map(button => 
-                button.id !== currentContentId ? 
-                `<button class="nav-btn" onclick="showContentPage('${button.id}', '${button.title}')">${button.title}</button>` : 
+            const currentCards = Object.keys(contentStorage)
+                .filter(key => key.startsWith(parentPage.slice(0, -1)))
+                .sort();
+            
+            const buttonHTML = currentCards.map(cardId => 
+                cardId !== currentContentId ? 
+                `<button class="nav-btn" onclick="showContentPage('${cardId}', '${getPageTitle(cardId)}')">${getPageTitle(cardId)}</button>` : 
                 ''
             ).join('');
 
@@ -1627,22 +1933,21 @@
                 document.querySelector('.auth-modal').classList.remove('active');
             }
         });
+        document.querySelector('.card-modal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('card-modal')) {
+                closeCardModal();
+            }
+        });
 
         // Initialize
         initializeData();
 
-        // Instructions for setup
         console.log(`
-        ===== INSTRUCTIONS FOR SETUP =====
-        
-        1. Go to https://console.firebase.google.com
-        2. Create a new project
-        3. Enable Authentication (Email/Password)
-        4. Enable Realtime Database
-        5. Copy your Firebase config and replace the firebaseConfig object
-        6. Create the first admin user manually in Firebase Console
-        
-        Default admin credentials will be created in Firebase Authentication.
+        ===== MILITARY ACADEMY WITH CARD MANAGEMENT =====
+        Firebase: ${firebaseConfig.projectId}
+        Card management: ACTIVE
+        Logging system: ACTIVE
+        Ready for use!
         `);
     </script>
 </body>
